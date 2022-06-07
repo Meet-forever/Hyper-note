@@ -1,9 +1,13 @@
-// import Head from 'next/head'
+import Head from 'next/head'
 import Router from 'next/router';
 export default function App() {
   return (
         <div>
-            <button type="button" onClick={() => Router.push('/home')}>Press</button>
+            <Head>
+              <title>Next App</title>
+              <link rel="icon" href="/favicon.svg" />
+            </Head>
+            <button type="button" onClick={() => Router.push('/home')}>Home</button>
         </div>
     )
 }
