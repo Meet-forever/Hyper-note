@@ -1,5 +1,7 @@
 # Hyper Note FrontEnd
 
 Next Goals:
-- SideBar
-- Login and Register Page
+
+- [x] SideBar
+- [x] Login and Register Page
+- [ ] Emoji Integration

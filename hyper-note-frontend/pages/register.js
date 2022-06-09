@@ -18,7 +18,7 @@ export default function register() {
                 <br/>
                 <br/>
                 <input type="password" className='px-4 py-3 w-full text-md rounded-md hover:bg-gray-100 ' placeholder="Password" />
-                <Link href="/forgotpassword"><div className="text-center p-1 cursor-pointer hover:text-gray-600 text-sm text-gray-700 w-full">Already Have an account?</div></Link>
+                <Link href="/forgotpassword"><div className="text-center p-1 cursor-pointer hover:text-gray-600 text-sm text-gray-700 w-full">Already have an account?</div></Link>
                 <br/>
                 <button type="submit" className="p-3 rounded-md text-center bg-blue-300 w-full hover:bg-blue-400">Submit</button>
                 <br/>

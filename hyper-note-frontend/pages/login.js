@@ -20,7 +20,7 @@ export default function login() {
                 <button type="submit" className="p-3 rounded-md text-center bg-blue-300 w-full hover:bg-blue-400">Submit</button>
                 <br/>
                 <br/>
-                <div className="w-full opacity-70 rounded-md flex flex-wrap justify-center items-center py-3 text-center border-2 bg-red-300 border-red-500">Error Sections</div>
+                <div className="w-full opacity-70 rounded-md flex flex-wrap justify-center items-center py-3 text-center border-2 bg-red-300 border-red-500">Error Section</div>
             </form>
         </div>
     </div>
