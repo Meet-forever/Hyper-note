@@ -3,110 +3,25 @@
             "notes": [{
         "id": 1,
         "heading": "Heading1",
-        "icon": "/images/emojis/documents.png",
+        "icon": "📄",
         "cover": "/images/themes/test2.jpg"
     },{
-        "id": 1,
+        "id": 2,
         "heading": "Works",
-        "icon": "/images/emojis/documents.png",
+        "icon": "📄",
         "cover": "/images/themes/test.jpg"
     },{
-        "id": 1,
+        "id": 3,
         "heading": "Empty",
-        "icon": "/images/emojis/document.png",
+        "icon": "📄",
         "cover": ""
     },{
-        "id": 1,
+        "id": 4,
         "heading": "Titled",
         "icon":"",
         "cover": "/images/themes/test2.jpg"
     },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": ""
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
-        "heading": "Untitled",
-        "icon":"",
-        "cover": "/images/themes/test2.jpg"
-    },{
-        "id": 1,
+        "id": 5,
         "heading": "Untitled",
         "icon":"",
         "cover": "/images/themes/test2.jpg"
