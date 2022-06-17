@@ -9,7 +9,6 @@ const ModalCover = ({handleClick, children}:Props) => {
     return (
         <div>
             <div className='fixed z-20 top-0 left-0 w-full h-screen' onClick={() => handleClick(false)}> </div>
-            {/* <div className='fixed z-20 top-0 bg-pink-300 left-0 w-full h-screen' onClick={()=> handleClick(false)}></div> */}
             {children}
         </div>
     )

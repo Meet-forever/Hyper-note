@@ -58,14 +58,12 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                 sidebar: !state.sidebar
             }
         case "SET_CURRECT_PAGE":
-            console.log(payload.current)
             return {
                 ...state,
                 selected: payload.current
             }
 
         case "ADD_PAGE":
-            // console.log(payload)
             return {
                 ...state,
                 userlist: [...state.userlist, {

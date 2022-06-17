@@ -1,8 +1,7 @@
-import { NextComponentType } from 'next'
 import React, { useContext } from 'react'
 import { context } from '../../state_manager/reducers/userState'
 
-const TextContent: NextComponentType = () => {
+const TextContent = () => {
     const { state } = useContext(context)
     return (
         <div className=" mx-auto w-2/3 break-words">
