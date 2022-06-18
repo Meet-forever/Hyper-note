@@ -1,4 +1,4 @@
-# Hyper Note FrontEnd
+# Hyper-Note FrontEnd
 
 Next Goals:
 
@@ -6,6 +6,6 @@ Next Goals:
 - [x] Login and Register Page
 - [x] Emoji Integration
 - [x] Dynamic Emoji Selection
+- [x] Modal for cover image and sidebar
 - [ ] Dynamic Cover Image Selection
-- [ ] Modal for cover image and sidebar
 - [ ] Dark mode

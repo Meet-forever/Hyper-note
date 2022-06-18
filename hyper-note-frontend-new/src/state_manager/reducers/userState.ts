@@ -57,6 +57,7 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                 ...state,
                 sidebar: !state.sidebar
             }
+
         case "SET_CURRECT_PAGE":
             return {
                 ...state,
@@ -87,7 +88,15 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                     icon: payload.emoji
                 }, ...state.userlist.slice(i + 1, state.userlist.length)]
             }
-
+        case "DELETE_LIST":
+            const {id} = payload;
+            if (!id) return state
+            let newlist = state.userlist.filter(val => val.id !== id)
+            return {
+                ...state,
+                selected: (state.selected?.id === id)? {}: state.selected,
+                userlist : newlist
+            }
 
     }
     return initialState

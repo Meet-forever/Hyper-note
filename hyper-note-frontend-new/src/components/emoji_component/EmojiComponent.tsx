@@ -10,9 +10,8 @@ const EmojiComponent = () => {
         dispatch({ type: 'UPDATE_ICON', payload: {id: state.selected.id, emoji: emojiObj.emoji} })
     }
     return (
-        <div className='absolute z-30' onClick={(e) => e.stopPropagation()}>
-            <Picker onEmojiClick={handleEmoji} ></Picker>
-            
+        <div onClick={(e) => e.stopPropagation()}>
+            <Picker onEmojiClick={handleEmoji} ></Picker>      
         </div>
     )
 }

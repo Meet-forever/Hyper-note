@@ -1,49 +1,67 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { context } from '../../../state_manager/reducers/userState';
-import { FaEllipsisH, FaPlus } from "react-icons/fa"
+import { FaEllipsisH, FaPlus, FaTrash, FaStar } from "react-icons/fa"
 import ModalCover from '../../modal_components/ModalCover';
-
+import { handleModalClick } from '../../modal_components/modalHandler';
 const UserList = () => {
     const { state, dispatch } = useContext(context);
-    const [pop, setpop] = useState(false);
+    const [popUp, setPopUp] = useState(false);
     const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
-    const handleModalClick = (e: React.MouseEvent<Element, MouseEvent>) => {
-        setpop(i => !i);
-        const THRESHOLD = 0.65;
-        let  cy = e.clientY, cx = e.clientX;
-        const RATIO = cy/window.innerHeight;  
-        if(RATIO > THRESHOLD) cy -= Math.floor(cy*(RATIO - THRESHOLD));
-        setcoordinate({
-            x: cx,
-            y: cy
-        })
+    const useID = useRef("");
+    const handleDelete = () =>{
+        if (useID.current == "") return;
+        dispatch({type: "DELETE_LIST", payload: {id: useID.current}})
+        setPopUp(false)
     }
     return (
-        <div className='h-[80%] bg-[#f7f6f3] flex flex-col items-start justify-start  overflow-auto p-2'>
-            {state.userlist.map((data, index) => <div key={index} className="w-full justify-between items-center flex hover:bg-gray-200">
-                <details className="px-2 text-[#a19f9a] w-full text-md cursor-pointer overflow-hidden">
-                    <summary className='overflow-clip'>
-                        <div className="inline-flex justify-start overflow-x-clip w-4/5 items-center gap-x-1">
+        <div className='h-[75%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full overflow-auto px-3'>
+            {state.userlist.map((data, index) =>
+                <div key={index} className="w-full justify-between items-center flex hover:bg-gray-200">
+                    <details className='text-[#a19f9a] px-2 text-md'>
+                        <summary className='overflow-hidden font-semibold whitespace-nowrap text-ellipsis max-w-[8rem] sm:max-w-[10rem] '>
                             <button className='text-sm'> {data.icon !== '' ? data.icon : "📄"} </button>
-                            <button className="hidescroll w-full flex justify-start items-center rounded-md px-1 text-md font-semibold"
+                            <div className="inline w-11/12 px-2 cursor-pointer"
                                 onClick={() => dispatch({ type: "SET_CURRECT_PAGE", payload: { current: data } })} >
-                                {data.heading}</button>
+                                {data.heading}</div>
+                        </summary>
+                    </details>
+                    <div className="flex items-center justify-center w-1/4">
+                        <button
+                            onClick={(e) => {
+                                useID.current = data.id
+                                handleModalClick(e, setPopUp, setcoordinate)
+                            }}
+                            className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
+                            <FaEllipsisH color='#a19f9a' />
+                        </button>
+                        <button
+                            className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
+                            <FaPlus color='#a19f9a' />
+                        </button>
+                    </div>
+                </div>)}
+            {
+                popUp ?
+                    <ModalCover coordinatePos={coordinate} handleClick={setPopUp} >
+                        <div className={`max-w-sm p-2  rounded-md shadow-[8px_2px_50px_-30px_rgba(0,0,0,0.6)] text-sm bg-white  flex flex-col`}>
+                            <div className='min-w-[10rem]'>
+                                <button
+                                onClick={handleDelete} 
+                                className='flex-1 hover:bg-gray-200 p-2 gap-x-4 w-full flex justify-between items-center'>
+                                    <div>Delete</div>
+                                    <FaTrash color="gray" />
+                                </button>
+                                <button className='flex-1 hover:bg-gray-200 p-2 gap-x-4 w-full flex justify-between items-center'>
+                                    <div>Favorite</div>
+                                    <FaStar color="gray" />
+                                </button>
+                                <div className='p-2 pb-0 text-xs'>Last edited: </div>
+                            </div>
                         </div>
-                    </summary>
-                </details>
-                <div className="flex items-center justify-center w-1/4">
-                    <button
-                        onClick={handleModalClick}
-                        className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
-                        <FaEllipsisH color='#a19f9a' />
-                    </button>
-                    <button
-                        className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
-                        <FaPlus color='#a19f9a' />
-                    </button>
-                </div>
-            </div>)}
-            
+                    </ModalCover>
+                    : ''
+            }
+
         </div>
     )
 }

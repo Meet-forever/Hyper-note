@@ -7,7 +7,7 @@ import UserList from './sidebar_components/UserList'
 const Sidebar = () => {
     const { state, dispatch } = useContext(context)
     return (
-        <div className={!state.sidebar ? `hidden ` : ` absolute z-20 h-screen sm:static sm:max-w-[20rem] md:max-w-[18rem] flex flex-col`}>
+        <div className={!state.sidebar ? `hidden ` : ` bg-white absolute z-20 h-screen sm:static sm:w-70 md:w-80 flex flex-col`}>
             <UserBox />
             <UserList /> 
             <div className='h-[5%] bg-[#f7f6f3]'>
