@@ -8,21 +8,24 @@ const UserList = () => {
     const [popUp, setPopUp] = useState(false);
     const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
     const useID = useRef("");
-    const handleDelete = () =>{
+    const handleDelete = () => {
         if (useID.current == "") return;
-        dispatch({type: "DELETE_LIST", payload: {id: useID.current}})
+        dispatch({ type: "DELETE_LIST", payload: { id: useID.current } })
         setPopUp(false)
     }
     return (
         <div className='h-[75%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full overflow-auto px-3'>
             {state.userlist.map((data, index) =>
-                <div key={index} className="w-full justify-between items-center flex hover:bg-gray-200">
-                    <details className='text-[#a19f9a] px-2 text-md'>
-                        <summary className='overflow-hidden font-semibold whitespace-nowrap text-ellipsis max-w-[8rem] sm:max-w-[10rem] '>
-                            <button className='text-sm'> {data.icon !== '' ? data.icon : "📄"} </button>
-                            <div className="inline w-11/12 px-2 cursor-pointer"
-                                onClick={() => dispatch({ type: "SET_CURRECT_PAGE", payload: { current: data } })} >
-                                {data.heading}</div>
+                <div key={index} className={`w-full justify-between items-center flex ${data.id === state.selected.id ? "bg-gray-200" : ""} hover:bg-gray-200`}>
+                    <details className={`text-[#a19f9a] px-2 text-md `} >
+                        <summary className='font-semibold px-1 max-w-[9rem] sm:max-w-[11rem] '>
+                            <span className='inline-flex gap-x-2 max-w-[5rem] sm:max-w-[7rem]'>
+                                <button className='text-sm'> {data.icon !== '' ? data.icon : "📄"} </button>
+                                <button className='whitespace-nowrap text-ellipsis overflow-hidden'
+                                    onClick={() => dispatch({ type: "SET_CURRECT_PAGE", payload: { current: data } })} >
+                                    {data.heading}
+                                </button>
+                            </span>
                         </summary>
                     </details>
                     <div className="flex items-center justify-center w-1/4">
@@ -46,8 +49,8 @@ const UserList = () => {
                         <div className={`max-w-sm p-2  rounded-md shadow-[8px_2px_50px_-30px_rgba(0,0,0,0.6)] text-sm bg-white  flex flex-col`}>
                             <div className='min-w-[10rem]'>
                                 <button
-                                onClick={handleDelete} 
-                                className='flex-1 hover:bg-gray-200 p-2 gap-x-4 w-full flex justify-between items-center'>
+                                    onClick={handleDelete}
+                                    className='flex-1 hover:bg-gray-200 p-2 gap-x-4 w-full flex justify-between items-center'>
                                     <div>Delete</div>
                                     <FaTrash color="gray" />
                                 </button>

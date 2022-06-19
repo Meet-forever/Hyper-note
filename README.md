@@ -11,6 +11,10 @@
 ##### User Page View 1
 ![User Page View 1](/assets/UserPage1.png)
 ##### User Page View 2
-![User Page View 3](/assets/UserPage2.png)
+![User Page View 2](/assets/UserPage2.png)
+##### User Page View 3
+![User Page View 3](/assets/UserPage3.png)
 ##### Customizable icon 
-![User Page View 2](/assets/EmojiIcon.png)
+![Emoji Feature](/assets/EmojiIcon.png)
+##### Responsive Design 
+![Responsize Design](/assets/Responsive.png)
