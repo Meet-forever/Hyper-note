@@ -1,6 +1,6 @@
 # Hyper-Note FrontEnd
 
-Next Goals:
+Future Goals:
 
 - [x] SideBar
 - [x] Login and Register Page
@@ -10,3 +10,5 @@ Next Goals:
 - [ ] Integrate Google Authentication with OAuth 2.0 for Login and Register Page
 - [ ] Dynamic Cover Image Selection
 - [ ] Dark mode
+- [ ] Implement n-array tree for sidebar tree
+- [ ] Implement stack based editor

@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import {v4} from "uuid"
 
-interface UserList {
+export interface UserList {
     id: string,
     heading: string,
     icon: string,
