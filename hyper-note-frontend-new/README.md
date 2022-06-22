@@ -9,7 +9,8 @@ Future Goals:
 - [x] Modal for cover image and sidebar
 - [ ] Implement n-array tree for sidebar tree
     - [x] Insertion
-    - [ ] Deletion
+    - [x] Deletion
+    - [ ] Update emoji
 - [ ] Integrate Google Authentication with OAuth 2.0 for Login and Register Page
 - [ ] Dynamic Cover Image Selection
 - [ ] Dark mode

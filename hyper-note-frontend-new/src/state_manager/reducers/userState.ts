@@ -58,7 +58,7 @@ let listdata = [{
                         "heading": "Heading6",
                         "icon": "📄",
                         "isOpen": false,
-                        "path": ["1", "7", "8", "9", "10"], 
+                        "path": ["1", "7", "8", "9", "10"],
                         "cover": "/images/themes/test.jpg",
                         "childdata": [{
                             "id": "12",
@@ -127,32 +127,50 @@ const initialState: UserContext = {
 function stateFunction(state: UserContext, action: { type: string, payload: any }): UserContext {
     const { type, payload } = action
     switch (type) {
-        case "CHANGE_SIDEBAR":
+        case "CHANGE_SIDEBAR": {
             return {
                 ...state,
                 sidebar: !state.sidebar
             }
+        }
 
-        case "SET_CURRECT_PAGE":
+        case "SET_CURRECT_PAGE": {
             return {
                 ...state,
                 selected: payload.current
             }
+        }
 
-        case "ADD_PAGE":
+        case "ADD_PAGE": {
+            const { path } = payload;
+            if (!path) return state;
+            const temp = [...path];
+
+            const appendPage = (arrobj: UserList[]): UserList[] => {
+                const val = (temp.length == 0) ? "" : temp.shift();
+                if (val === "") return [...arrobj, { id: v4(), heading: "Untitled", icon: '', cover: "", isOpen: false, path: path, childdata: [] }]
+                else {
+                    const index = arrobj.findIndex(data => data.id === val);
+                    if (index === -1) return arrobj
+                    else {
+                        return [
+                            ...arrobj.slice(0, index), {
+                                ...arrobj[index],
+                                childdata: appendPage(arrobj[index].childdata)
+                            },
+                            ...arrobj.slice(index + 1, arrobj.length)
+                        ]
+                    }
+                }
+            }
+
             return {
                 ...state,
-                userlist: [...state.userlist, {
-                    id: v4(),
-                    heading: "Untitled",
-                    icon: '',
-                    cover: "",
-                    isOpen: false,
-                    path: [],
-                    childdata: []
-                }]
+                userlist: appendPage(state.userlist)
             }
-        case "UPDATE_ICON":
+        }
+
+        case "UPDATE_ICON": {
             let i = state.userlist.findIndex(index => payload.id === index.id)
             if (i === -1) return state
             return {
@@ -166,16 +184,29 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                     icon: payload.emoji
                 }, ...state.userlist.slice(i + 1, state.userlist.length)]
             }
-        case "DELETE_LIST":
+        }
+        case "DELETE_LIST": {
             const { id, path } = payload;
-            if (!id) return state
-            
-            let newlist = state.userlist.filter(val => val.id !== id)
+            if (!id || !path) return state
+            const filterobj = (arrobj: UserList[], id: string) => {
+                const target = (path.length !== 0) ? path.shift() : "";
+                for (let i = 0; i < arrobj.length; i++) {
+                    const current = arrobj[i];
+                    if (target == "" && current.id == id) {
+                        arrobj.splice(i, 1);
+                        break;
+                    } else if (target == current.id) {
+                        filterobj(current.childdata, id);
+                        break;
+                    }
+                }
+            }
+            filterobj(state.userlist, id);
             return {
                 ...state,
                 selected: (state.selected?.id === id) ? {} : state.selected,
-                userlist: newlist
             }
+        }
 
     }
     return initialState
