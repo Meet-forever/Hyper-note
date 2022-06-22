@@ -150,17 +150,7 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                 const val = (temp.length == 0) ? "" : temp.shift();
                 if (val === "") return [...arrobj, { id: v4(), heading: "Untitled", icon: '', cover: "", isOpen: false, path: path, childdata: [] }]
                 else {
-                    const index = arrobj.findIndex(data => data.id === val);
-                    if (index === -1) return arrobj
-                    else {
-                        return [
-                            ...arrobj.slice(0, index), {
-                                ...arrobj[index],
-                                childdata: appendPage(arrobj[index].childdata)
-                            },
-                            ...arrobj.slice(index + 1, arrobj.length)
-                        ]
-                    }
+                    return arrobj.map((data) => (data.id === val) ? { ...data, childdata: appendPage(data.childdata) } : data)
                 }
             }
 
@@ -171,20 +161,24 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
         }
 
         case "UPDATE_ICON": {
-            let i = state.userlist.findIndex(index => payload.id === index.id)
-            if (i === -1) return state
+            const { id, emoji, path } = payload
+            if (!id || !emoji || !path) return state
+            const temp = [...path]
+            const updateIcon = (arrobj: UserList[]): UserList[] => {
+                const val = (temp.length == 0) ? "" : temp.shift();
+                if (val === "") {
+                    return arrobj.map((data) => (data.id === id) ? { ...data, icon: emoji } : data)
+                } else {
+                    return arrobj.map((data) => (data.id === val) ? { ...data, childdata: updateIcon(data.childdata) } : data)
+                }
+            }
             return {
                 ...state,
-                selected: {
-                    ...state.selected,
-                    icon: payload.emoji
-                },
-                userlist: [...state.userlist.slice(0, i), {
-                    ...state.userlist[i],
-                    icon: payload.emoji
-                }, ...state.userlist.slice(i + 1, state.userlist.length)]
+                selected: { ...state.selected, icon: emoji },
+                userlist: updateIcon(state.userlist)
             }
         }
+
         case "DELETE_LIST": {
             const { id, path } = payload;
             if (!id || !path) return state

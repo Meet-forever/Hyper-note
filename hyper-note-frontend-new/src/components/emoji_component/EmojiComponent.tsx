@@ -7,7 +7,7 @@ const Picker = dynamic(() => import('emoji-picker-react'), { ssr: false });
 const EmojiComponent = () => {
     const { state, dispatch } = useContext(context);
     const handleEmoji = (e: React.MouseEvent<Element, MouseEvent>, emojiObj: IEmojiData) => {
-        dispatch({ type: 'UPDATE_ICON', payload: {id: state.selected.id, emoji: emojiObj.emoji} })
+        dispatch({ type: 'UPDATE_ICON', payload: {id: state.selected.id, emoji: emojiObj.emoji, path: state.selected.path} })
     }
     return (
         <div onClick={(e) => e.stopPropagation()}>
