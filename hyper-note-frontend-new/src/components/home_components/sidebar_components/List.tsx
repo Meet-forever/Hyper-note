@@ -6,42 +6,50 @@ import { context, UserList } from "../../../state_manager/reducers/userState"
 
 type Props = {
     data: UserList,
-    userID: React.MutableRefObject<string>,
+    userID: React.MutableRefObject<undefined[]|[string, string[]]>,
     setPopUp: React.Dispatch<React.SetStateAction<boolean>>,
     setCoordinate: React.Dispatch<React.SetStateAction<{
         x: number;
         y: number;
-    }>>
+    }>>,
+    children: JSX.Element
 }
 
-const List = ({ data, userID, setPopUp, setCoordinate }: Props) => {
+const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
     const { state, dispatch } = useContext(context);
     return (
-        <div className={`w-full justify-between items-center flex ${data.id === state.selected.id ? "bg-gray-200" : ""} hover:bg-gray-200`}>
-            <details className={`text-[#a19f9a] text-sm sm:text-base px-1 text-md w-3/4 `} >
-                <summary className='font-semibold px-1 max-w-[9rem] sm:max-w-[11rem] '>
-                    <span className='inline-flex gap-x-2 max-w-[5rem] sm:max-w-[7rem] w-5/6'>
-                        <button className='text-sm'> {data.icon !== '' ? data.icon : "📄"} </button>
-                        <button className='  whitespace-nowrap text-ellipsis overflow-hidden w-full text-left'
-                            onClick={() => dispatch({ type: "SET_CURRECT_PAGE", payload: { current: data } })} >
-                            {data.heading}
-                        </button>
-                    </span>
-                </summary>
-            </details>
-            <div className="flex items-center justify-center w-1/4">
-                <button
-                    onClick={(e) => {
-                        userID.current = data.id
-                        handleModalClick(e, setPopUp, setCoordinate)
-                    }}
-                    className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
-                    <FaEllipsisH color='#a19f9a' />
-                </button>
-                <button
-                    className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
-                    <FaPlus color='#a19f9a' />
-                </button>
+        <div className='w-[12rem] sm:w-[14rem]'>
+            <div className={`w-full justify-between items-center px-1 flex`}>
+                <details className={`text-[#a19f9a] text-sm sm:text-base text-md w-full `}  >
+                    <summary className={`px-2 w-full font-semibold ${data.id === state.selected.id ? "bg-gray-200" : ""} hover:bg-gray-200 `}>
+                        <div className='inline-flex justify-between w-[88%] sm:w-[91%] '>
+                            <span className='flex gap-x-2 w-full'>
+                                <button className='text-sm'> {data.icon !== '' ? data.icon : "📄"} </button>
+                                <button className='  whitespace-nowrap text-ellipsis overflow-hidden w-full text-left'
+                                    onClick={() => dispatch({ type: "SET_CURRECT_PAGE", payload: { current: data } })} >
+                                    {data.heading}
+                                </button>
+                            </span>
+                            <div className="flex items-center justify-center w-1/4">
+                                <button
+                                    onClick={(e) => {
+                                        userID.current = [data.id, data.path]
+                                        handleModalClick(e, setPopUp, setCoordinate)
+                                    }}
+                                    className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
+                                    <FaEllipsisH color='#a19f9a' />
+                                </button>
+                                <button
+                                    className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
+                                    <FaPlus color='#a19f9a' />
+                                </button>
+                            </div>
+                        </div>
+                    </summary>
+                    <div className="">
+                    {children}
+                    </div>
+                </details>
             </div>
         </div>
     )

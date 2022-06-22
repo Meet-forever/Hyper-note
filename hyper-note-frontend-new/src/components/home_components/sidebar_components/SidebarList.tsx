@@ -1,36 +1,37 @@
 import React, { useContext, useRef, useState } from 'react'
-import { context } from '../../../state_manager/reducers/userState';
+import { context, UserList } from '../../../state_manager/reducers/userState';
 import { FaTrash, FaStar } from "react-icons/fa"
 import ModalCover from '../../modal_components/ModalCover';
 import List from './List';
-const UserList = () => {
+
+
+const SidebarList = () => {
     const { state, dispatch } = useContext(context);
     const [popUp, setPopUp] = useState(false);
     const [coordinate, setCoordinate] = useState({ x: 0, y: 0 })
-    const userID = useRef("");
+    const userID = useRef([]);
     const handleDelete = () => {
-        if (userID.current == "") return;
-        dispatch({ type: "DELETE_LIST", payload: { id: userID.current } })
+        if (userID.current == []) return;
+        dispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1] } })
         setPopUp(false)
     }
-    // const func = (index:number, data:any)=>{
-    //                 <List
-    //                 key={index}
-    //                 setPopUp={setPopUp}
-    //                 setCoordinate={setCoordinate}
-    //                 userID={userID}
-    //                 data={data} />        
-    // }
+
+    const narray = (userlist: UserList[]) => userlist.map((data, index) => {
+        return (
+            <List
+                key={data.id}
+                setPopUp={setPopUp}
+                setCoordinate={setCoordinate}
+                userID={userID}
+                data={data} >
+                {data.childdata === [] ? <></> : <>{narray(data.childdata)}</>}
+            </List>
+        )
+    }
+    )
     return (
-        <div className='h-[75%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full overflow-auto px-3'>
-            {state.userlist.map((data, index) =>
-                <List
-                    key={index}
-                    setPopUp={setPopUp}
-                    setCoordinate={setCoordinate}
-                    userID={userID}
-                    data={data} />
-            )}
+        <div className='h-[75%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescroll overflow-auto px-3'>
+            {narray(state.userlist)}
             {
                 popUp ?
                     <ModalCover coordinatePos={coordinate} handleClick={setPopUp} >
@@ -56,4 +57,4 @@ const UserList = () => {
     )
 }
 
-export default UserList
+export default SidebarList

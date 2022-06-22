@@ -1,11 +1,14 @@
 import { createContext } from "react";
-import {v4} from "uuid"
+import { v4 } from "uuid"
 
 export interface UserList {
     id: string,
     heading: string,
     icon: string,
-    cover: string
+    cover: string,
+    isOpen: boolean,
+    path: string[],
+    childdata: UserList[]
 }
 
 type UserContext = {
@@ -19,34 +22,106 @@ let listdata = [{
     "id": "1",
     "heading": "Heading1",
     "icon": "📄",
-    "cover": "/images/themes/test2.jpg"
+    "isOpen": false,
+    "path": [],
+    "cover": "/images/themes/test2.jpg",
+    "childdata": [{
+        "id": "7",
+        "heading": "Heading2",
+        "icon": "📄",
+        "isOpen": false,
+        "path": ["1"],
+        "cover": "/images/themes/test.jpg",
+        "childdata": [{
+            "id": "8",
+            "heading": "Heading3",
+            "icon": "📄",
+            "isOpen": false,
+            "path": ["1", "7"],
+            "cover": "/images/themes/test.jpg",
+            "childdata": [{
+                "id": "9",
+                "heading": "Heading4",
+                "icon": "📄",
+                "isOpen": false,
+                "path": ["1", "7", "8"],
+                "cover": "/images/themes/test.jpg",
+                "childdata": [{
+                    "id": "10",
+                    "heading": "Heading5",
+                    "icon": "📄",
+                    "isOpen": false,
+                    "path": ["1", "7", "8", "9"],
+                    "cover": "/images/themes/test.jpg",
+                    "childdata": [{
+                        "id": "11",
+                        "heading": "Heading6",
+                        "icon": "📄",
+                        "isOpen": false,
+                        "path": ["1", "7", "8", "9", "10"], 
+                        "cover": "/images/themes/test.jpg",
+                        "childdata": [{
+                            "id": "12",
+                            "heading": "Heading7",
+                            "icon": "📄",
+                            "isOpen": false,
+                            "path": ["1", "7", "8", "9", "10", "11"],
+                            "cover": "/images/themes/test.jpg",
+                            "childdata": []
+                        }]
+                    }]
+                }]
+            }]
+        }]
+    },
+    {
+        "id": "13",
+        "heading": "Heading8",
+        "icon": "📄",
+        "isOpen": false,
+        "path": ["1"],
+        "cover": "/images/themes/test.jpg",
+        "childdata": []
+    }]
 }, {
     "id": "2",
     "heading": "Works",
     "icon": "📄",
-    "cover": "/images/themes/test.jpg"
+    "isOpen": false,
+    "path": [],
+    "cover": "/images/themes/test.jpg",
+    "childdata": []
 }, {
     "id": "3",
     "heading": "Empty",
     "icon": "📄",
-    "cover": ""
+    "isOpen": false,
+    "path": [],
+    "cover": "",
+    "childdata": []
 }, {
     "id": '4',
     "heading": "Titled",
     "icon": "",
-    "cover": "/images/themes/test2.jpg"
+    "isOpen": false,
+    "path": [],
+    "cover": "/images/themes/test2.jpg",
+    "childdata": []
 }, {
     "id": "5",
     "heading": "Untitled",
     "icon": "",
-    "cover": "/images/themes/test2.jpg"
+    "isOpen": false,
+    "path": [],
+    "cover": "/images/themes/test2.jpg",
+    "childdata": []
 }]
 
 const initialState: UserContext = {
     userlist: listdata,
     theme: "light",
     selected: {},
-    sidebar: true
+    sidebar: true,
 }
 
 function stateFunction(state: UserContext, action: { type: string, payload: any }): UserContext {
@@ -71,7 +146,10 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                     id: v4(),
                     heading: "Untitled",
                     icon: '',
-                    cover: ""
+                    cover: "",
+                    isOpen: false,
+                    path: [],
+                    childdata: []
                 }]
             }
         case "UPDATE_ICON":
@@ -89,13 +167,14 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
                 }, ...state.userlist.slice(i + 1, state.userlist.length)]
             }
         case "DELETE_LIST":
-            const {id} = payload;
+            const { id, path } = payload;
             if (!id) return state
+            
             let newlist = state.userlist.filter(val => val.id !== id)
             return {
                 ...state,
-                selected: (state.selected?.id === id)? {}: state.selected,
-                userlist : newlist
+                selected: (state.selected?.id === id) ? {} : state.selected,
+                userlist: newlist
             }
 
     }
