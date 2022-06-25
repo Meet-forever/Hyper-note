@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { context } from '../../state_manager/reducers/userState'
 import { FaPlus } from "react-icons/fa"
-import UserBox from './sidebar_components/UserBox'
-import SidebarList from './sidebar_components/SidebarList'
+import UserBox from './sidebar/UserBox'
+import SidebarList from './sidebar/SidebarList'
 
 const Sidebar = () => {
     const { state, dispatch } = useContext(context)

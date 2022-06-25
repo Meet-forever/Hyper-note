@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react'
 import { FaBars, FaPlus } from 'react-icons/fa'
 import { FiShare } from 'react-icons/fi'
 import { context } from '../../state_manager/reducers/userState';
-import EmojiComponent from '../emoji_component/EmojiComponent';
-import ModalCover from '../modal_components/ModalCover';
-import { handleModalClick } from '../modal_components/modalHandler';
+import EmojiComponent from '../emoji/EmojiComponent';
+import ModalCover from '../modal/ModalCover';
+import { handleModalClick } from '../modal/modalHandler';
 
 const TopBar = () => {
     const { state, dispatch } = useContext(context)

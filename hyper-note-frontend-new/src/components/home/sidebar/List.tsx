@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { FaEllipsisH, FaPlus } from 'react-icons/fa'
-import { handleModalClick } from '../../modal_components/modalHandler'
+import { handleModalClick } from '../../modal/modalHandler'
 import { context, UserList } from "../../../state_manager/reducers/userState"
 
 

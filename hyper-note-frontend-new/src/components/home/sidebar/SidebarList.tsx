@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react'
 import { context, UserList } from '../../../state_manager/reducers/userState';
 import { FaTrash, FaStar } from "react-icons/fa"
-import ModalCover from '../../modal_components/ModalCover';
+import ModalCover from '../../modal/ModalCover';
 import List from './List';
 
 

@@ -4,9 +4,9 @@ import { FaPlus } from 'react-icons/fa'
 import TextContent from './TextContent';
 import TopBar from './TopBar';
 import CoverImage from './CoverImage';
-import EmojiComponent from '../emoji_component/EmojiComponent';
-import ModalCover from '../modal_components/ModalCover';
-import { handleModalClick } from '../modal_components/modalHandler';
+import EmojiComponent from '../emoji/EmojiComponent';
+import ModalCover from '../modal/ModalCover';
+import { handleModalClick } from '../modal/modalHandler';
 
 const UserPage = () => {
     const { state } = useContext(context);

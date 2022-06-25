@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { NextPage } from 'next'
-import NavBar1 from '../components/navbar_components/NavBar1'
-import RegisterForm from '../components/register_component/RegisterForm'
+import NavBar1 from '../../components/navbar/NavBar1'
+import RegisterForm from '../../components/register/RegisterForm'
 
 const register: NextPage = () => {
   return (

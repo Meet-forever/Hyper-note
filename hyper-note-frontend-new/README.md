@@ -11,7 +11,9 @@ Future Goals:
     - [x] Insertion
     - [x] Deletion
     - [x] Update emoji
-- [ ] Integrate Google Authentication with OAuth 2.0 for Login and Register Page
+- [x] Integrate OAuth Providers for Login and Register Page
+    - [x] Google
+    - [x] Github
 - [ ] Dynamic Cover Image Selection
 - [ ] Dark mode
 - [ ] Implement stack based editor
