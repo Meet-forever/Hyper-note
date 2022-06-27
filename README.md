@@ -16,5 +16,7 @@
 ![User Page View 3](/assets/UserPage3.png)
 ##### Customizable icon 
 ![Emoji Feature](/assets/EmojiIcon.png)
+##### Third Party Authentication
+![OAuth](/assets/ThirdPartyAuthentication.png)
 ##### Responsive Design 
 ![Responsize Design](/assets/Responsive.png)

@@ -1,13 +1,12 @@
-import { NextPage } from 'next'
 import React, { useReducer } from 'react'
 import Sidebar from '../components/home/Sidebar'
 import UserPage from '../components/home/UserPage'
 import { reducer, defaultState, UserProvider } from '../state_manager/reducers/userState'
 import { getSession } from 'next-auth/react'
 
-const home: NextPage = () => {
+const home = ({session}:{session:any}) => {
     const [state, dispatch] = useReducer(reducer, defaultState);
-
+    // console.log(session)
     return (
         <UserProvider value={{ state, dispatch }} >
             <div className='flex'>
@@ -24,13 +23,13 @@ export default home
 
 export async function getServerSideProps(context:any){
     const session = await getSession(context);
-    console.log(session?.user)
     if(!session) return {
         redirect: {
             destination: '/',
             permanent: false
         }
     }
+    return {props:{session}};
 }
 
 // Grid Version

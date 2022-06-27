@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { FaGithub, FaGoogle } from 'react-icons/fa'
+import { signIn } from 'next-auth/react';
 
 const RegisterForm = () => {
     const initialRegisterState = { firstname: "", lastname: "", email: "", password: "", confirmpassword: "" }
@@ -57,8 +58,8 @@ const RegisterForm = () => {
                 <span className='w-1/3 border-[1px] border-gray-400 ' /> <div className='px-2 text-gray-500 font-semibold'>OR</div> <span className='w-1/3 border-[1px] border-gray-400 ' />
             </div>
             <div className='text-3xl flex w-full justify-evenly '>
-                <button type="button" onClick={() => null}><FaGoogle color='#6D6D6D' /></button>
-                <button type="button" onClick={() => null}><FaGithub color='#6D6D6D' /></button>
+                <button type="button" onClick={()=> signIn("google", {callbackUrl: "/home"})}><FaGoogle color='#5f5f5f' /></button>
+                <button type="button" onClick={()=> signIn("github", {callbackUrl: "/home"})}><FaGithub color='#5f5f5f' /></button>
             </div>
         </div>
     )

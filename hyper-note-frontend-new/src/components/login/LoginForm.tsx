@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { FaGoogle, FaGithub } from 'react-icons/fa'
 import { signIn } from "next-auth/react"
 
-const LoginForm = ({providers}:{providers: any}) => {
+const LoginForm = () => {
     const initialLogin = { email: "", password: "" }
     const initialErrorState = { ...initialLogin, error: false }
     const [error, setError] = useState(initialErrorState)
@@ -43,8 +43,8 @@ const LoginForm = ({providers}:{providers: any}) => {
                 <span className='w-1/3 border-[1px] border-gray-400 ' /> <div className='px-2 text-gray-500 font-semibold'>OR</div> <span className='w-1/3 border-[1px] border-gray-400 ' />
             </div>
             <div className='text-3xl flex justify-evenly '>
-                <button onClick={()=> signIn("google", {callbackUrl: "/home"})}><FaGoogle color='#6D6D6D' /></button>
-                <button onClick={()=> signIn("github", {callbackUrl: "/home"})}><FaGithub color='#6D6D6D' /></button>
+                <button onClick={()=> signIn("google", {callbackUrl: "/home"})}><FaGoogle color='#5f5f5f' /></button>
+                <button onClick={()=> signIn("github", {callbackUrl: "/home"})}><FaGithub color='#5f5f5f' /></button>
             </div>
         </div>
     )

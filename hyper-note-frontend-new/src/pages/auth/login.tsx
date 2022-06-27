@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { NextPage } from 'next'
 import NavBar1 from '../../components/navbar/NavBar1'
 import LoginForm from '../../components/login/LoginForm'
-import { getProviders } from "next-auth/react"
+import { getSession } from "next-auth/react"
 
-const Login: NextPage = ({ providers}: any) => {
+const Login: NextPage = () => {
   
   return (
     <div>
@@ -14,7 +14,7 @@ const Login: NextPage = ({ providers}: any) => {
         <div className="w-full h-screen absolute">
           <Image src="/loginwallp.jpg" layout="fill" objectFit="cover"></Image>
         </div>
-        <LoginForm providers={providers} />
+        <LoginForm />
       </div>
     </div>
   )
@@ -23,9 +23,13 @@ const Login: NextPage = ({ providers}: any) => {
 export default Login
 
 
-export async function getServerSideProps() {
-  const providers = await getProviders();
-  return {
-    props: { providers},
+export async function getServerSideProps(context:any) {
+  const session = await getSession(context);
+  if(session) return {
+    redirect: {
+      destination: "/home",
+      permanent: false 
+    }
   }
+  return {props:{}}
 }
