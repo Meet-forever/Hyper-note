@@ -20,7 +20,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         res.status(400);
         return;
     }
-    // console.log(user)
-
     res.status(200).json({ name: user.name, email: user.email, avatar: user.avatar })
 }

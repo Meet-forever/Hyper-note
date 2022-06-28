@@ -12,24 +12,26 @@ export default NextAuth({
             clientSecret: String(process.env.GOOGLE_CLIENT_SECRET),
             profile: async (profile, token) => {
                 const db = (await clientPromise).db().collection('users')
-                const user:any = await db.findOne({ email: profile.email })
+                const user: any = await db.findOne({ email: profile.email })
                 let data;
                 if (!user) {
                     db.insertOne({
-                        email: profile.email,
                         firstname: profile.name,
                         lastname: '',
+                        email: profile.email,
+                        password: "",
+                        saltrounds: 0,
                         avatar: 'default',
                         userlist: [],
                         joined: new Date(),
                         provider: "google"
                     })
-                    data = {avatar: 'default'}
+                    data = { avatar: 'default' }
                 }
-                else{
-                    data = {avatar: user.avatar}
+                else {
+                    data = { avatar: user.avatar }
                 }
-                return { id: profile.sub, email: profile.email, name: profile.name, data: data.avatar }
+                return { id: profile.sub, email: profile.email, name: profile.name, avatar: data.avatar }
             }
         }),
         GithubProvider({
@@ -37,24 +39,26 @@ export default NextAuth({
             clientSecret: String(process.env.GITHUB_SECRET),
             profile: async (profile, token) => {
                 const db = (await clientPromise).db().collection('users')
-                const user:any = await db.findOne({ email: profile.email })
+                const user: any = await db.findOne({ email: profile.email })
                 let data;
                 if (!user) {
                     db.insertOne({
-                        email: profile.email,
                         firstname: profile.name,
                         lastname: '',
+                        email: profile.email,
+                        password: "",
+                        saltrounds: 0,
                         avatar: 'default',
                         userlist: [],
                         joined: new Date(),
                         provider: "github"
                     })
-                    data = {avatar: 'default'}
+                    data = { avatar: 'default' }
                 }
-                else{
-                    data = {avatar: user.avatar}
+                else {
+                    data = { avatar: user.avatar }
                 }
-                return { id: profile.id.toString(), email: profile.email, name: profile.name.split(" ")[0] || profile.login, data: data.avatar }
+                return { id: profile.id.toString(), email: profile.email, name: profile.name.split(" ")[0] || profile.login, avatar: data.avatar }
             }
         }),
         CredentialsProvider({
@@ -64,7 +68,7 @@ export default NextAuth({
                 const res = await fetch("/api/login", {
                     method: 'POST',
                     body: JSON.stringify(credentials),
-                    headers: { "Content-Type" : "application/json" }
+                    headers: { "Content-Type": "application/json" }
                 })
                 const user = await res.json()
 

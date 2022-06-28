@@ -4,9 +4,9 @@ import { FaGithub, FaGoogle } from 'react-icons/fa'
 import { signIn } from 'next-auth/react';
 
 const RegisterForm = () => {
-    const initialRegisterState = { firstname: "", lastname: "", email: "", password: "", confirmpassword: "" }
+    const initialRegisterState = { firstname: "", lastname: "", email: "", password: "", confirmpassword: ""}
     const [register, setRegister] = useState(initialRegisterState)
-    const initialErrorState = { ...initialRegisterState, error: false }
+    const initialErrorState = { ...initialRegisterState, error: false, alreadyexists: false}
     const [error, setError] = useState(initialErrorState)
     const check = () =>{
         setError(initialErrorState)
@@ -16,14 +16,22 @@ const RegisterForm = () => {
         if (email !== "" && !email.match(/[a-z]+[a-z0-9]*@[a-z]+\.([a-z]{3}|[a-z]{2})/g)) setError(i => ({ ...i, email: "*email is invalid", error: true }))
         if (password !== "" && password.length < 8) setError(i => ({ ...i, password: "*password must be at least 8 characters.", error: true }))
     }
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const { firstname, lastname, email } = register
+        const { firstname, lastname, email, password } = register
         if (firstname === "") setError(i => ({ ...i, firstname: "*first name is required", error: true }))
         if (lastname === "") setError(i => ({ ...i, lastname: "*last name is required", error: true }))
         if (email === "") setError(i => ({ ...i, email: "*email is invalid", error: true }))
         check()
-        if (error.error) return
+        if (!error.error){
+            const res = await fetch("/api/register", {
+                    method: 'POST',
+                    body: JSON.stringify({firstname, lastname, email, password: password}),
+                    headers: { "Content-Type" : "application/json" }
+            }).then(r => r.json())
+            if(res?.status === 200) signIn("credential", {email: email, password: password})
+            if(res?.status === 400) setError(i => ({...i, alreadyexists: true}));
+        }
     }
 
     useEffect(() => {
@@ -31,7 +39,7 @@ const RegisterForm = () => {
         setError(i => ({ ...i, confirmpassword: "*password doesn't match", error: true }))
         if (register.confirmpassword === register.password) setError(i => ({ ...i, confirmpassword: "", error: false }));
     }, [register])
-
+    
     return (
         <div className="mx-auto max-w-sm w-full py-8 px-14 bg-opacity-70 rounded-xl z-10 bg-gray-100 shadow-lg ">
             <form className='flex flex-col text-xs sm:text-sm  justify-center items-center' onSubmit={handleSubmit}>
@@ -52,6 +60,7 @@ const RegisterForm = () => {
                 <input onChange={(e) => setRegister(i => ({ ...i, confirmpassword: e.target.value }))} name="confirmpassword" type="password" className={`px-4 py-3 w-full focus:outline-none focus:shadow-outline rounded-md hover:bg-stone-50 ${error.confirmpassword ? `border border-red-500` : ``}`} placeholder="Confirm Password" />
                 {error.confirmpassword !== "" ? <p className="text-red-500 px-2 py-1 w-full text-xs italic">{error.confirmpassword}</p> : <p className='p-2'></p>}
                 <button type="submit" className="p-3 rounded-md text-center text-gray-700 font-semibold bg-blue-300 w-full hover:bg-blue-400">Register</button>
+                {error.alreadyexists? <p className="text-red-500 px-2 py-1 w-full text-xs italic">*user already exists.</p> : <p className='p-2 w-full'></p>}
                 <div className='text-center p-1 cursor-pointer font-semibold text-sm text-gray-700  w-full'>Already have an Account?<Link href="/auth/login"><div className=" text-sky-700 hover:text-sky-500">Log In</div></Link></div>
             </form>
             <div className='flex justify-center w-full items-center text-xs text-gray-500'>
@@ -64,5 +73,7 @@ const RegisterForm = () => {
         </div>
     )
 }
+
+
 
 export default RegisterForm
