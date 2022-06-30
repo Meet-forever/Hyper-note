@@ -6,11 +6,12 @@ import { signOut } from 'next-auth/react';
 const UserBox = () => {
     const { dispatch } = useContext(context);
     return (
-        <div className=' h-[24%] sm:h-[25%] bg-[#f7f6f3] overflow-y-auto hidescroll py-2'>
+        <div className=' h-[20%] sm:h-[21%] bg-[#f7f6f3] overflow-y-auto hidescroll py-2'>
             <div className="flex flex-col justify-center items-start ">
                 <div className="flex justify-between items-center px-4 w-full">
-                    <button className='hover:bg-gray-200 p-1'>
-                        <FaCog color="#a19f9a" />
+                    <button className='flex justify-center  items-center gap-x-3 font-semibold text-[#a19f90] hover:bg-gray-200 p-1'>
+                        <FaUserAstronaut color="#a19f9a" />
+                        Meet's Note
                     </button>
                     <button
                         type="button"
@@ -19,10 +20,6 @@ const UserBox = () => {
                     >
                         <FaChevronLeft color="#a19f9a" />
                     </button>
-                </div>
-                <div className='flex justify-start font-semibold text-[#a19f90] break-words gap-x-3 items-center p-1 pl-5 w-full'>
-                    <FaUserAstronaut color="#a19f9a" />
-                    Meet's Note
                 </div>
                 <div className="flex justify-start font-semibold text-[#a19f90] gap-x-3 items-center p-1 pl-5 hover:bg-gray-200 w-full cursor-pointer"><FaUsers color="#a19f9a" />Groups</div>
                 <button

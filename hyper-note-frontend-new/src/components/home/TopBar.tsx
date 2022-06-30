@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { FaBars, FaPlus } from 'react-icons/fa'
+import { FaBars, FaCog, FaPlus } from 'react-icons/fa'
 import { FiShare } from 'react-icons/fi'
 import { context } from '../../state_manager/reducers/userState';
 import EmojiComponent from '../emoji/EmojiComponent';
@@ -26,8 +26,9 @@ const TopBar = () => {
                     </ModalCover> : ''}
                 <h1 className='overflow-hidden whitespace-nowrap text-ellipsis text-[#a19f9a]'>{state.selected.heading}</h1>
             </div>
-            <div className="flex justify-center items-center gap-x-2">
+            <div className="flex justify-center items-center gap-x-4">
                 <button><FiShare color="#a19f9a" /></button>
+                <button><FaCog color="#a19f9a" /></button>
             </div>
         </div>
     )

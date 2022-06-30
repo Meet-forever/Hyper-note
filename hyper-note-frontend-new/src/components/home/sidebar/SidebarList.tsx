@@ -30,7 +30,7 @@ const SidebarList = () => {
     }
     )
     return (
-        <div className='h-[70%] sm:h-[71%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescroll overflow-auto px-3'>
+        <div className='h-[72%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescroll overflow-auto px-3'>
             {narray(state.userlist)}
             {
                 popUp ?

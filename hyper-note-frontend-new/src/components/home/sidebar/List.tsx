@@ -47,7 +47,7 @@ const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
                             </div>
                         </div>
                     </summary>
-                    <div className="">
+                    <div className="pl-1">
                     {children}
                     </div>
                 </details>
