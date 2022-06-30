@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { context, UserList } from '../../../state_manager/reducers/userState';
-import { FaTrash, FaStar } from "react-icons/fa"
+import { FaTrash, FaStar, FaSearch } from "react-icons/fa"
 import ModalCover from '../../modal/ModalCover';
 import List from './List';
 
@@ -30,7 +30,7 @@ const SidebarList = () => {
     }
     )
     return (
-        <div className='h-[75%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescroll overflow-auto px-3'>
+        <div className='h-[70%] sm:h-[71%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescroll overflow-auto px-3'>
             {narray(state.userlist)}
             {
                 popUp ?

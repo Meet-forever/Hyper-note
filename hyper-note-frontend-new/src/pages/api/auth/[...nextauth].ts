@@ -65,13 +65,14 @@ export default NextAuth({
             name: 'credentials',
             credentials: {},
             async authorize(credentials) {
-                const res = await fetch("/api/login", {
+                const dev = process.env.NODE_ENV != "production"
+                const url = dev ? "http://localhost:3000" : ""
+                const res = await fetch(`${url}/api/login`, {
                     method: 'POST',
                     body: JSON.stringify(credentials),
                     headers: { "Content-Type": "application/json" }
                 })
                 const user = await res.json()
-
                 if (res.ok && user) {
                     return user
                 }
@@ -84,9 +85,8 @@ export default NextAuth({
         signIn: "/auth/login"
     },
     callbacks: {
-        jwt: async ({ token, account, profile }) => {
+        jwt: async ({ token, account, profile, user }) => {
             // Persist the OAuth access_token to the token right after signin
-            console.log(profile)
             if (account?.access_token) {
                 token.accessToken = account.access_token
             }

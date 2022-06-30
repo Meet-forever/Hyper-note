@@ -29,7 +29,7 @@ const RegisterForm = () => {
                     body: JSON.stringify({firstname, lastname, email, password: password}),
                     headers: { "Content-Type" : "application/json" }
             }).then(r => r.json())
-            if(res?.status === 200) signIn("credential", {email: email, password: password})
+            if(res?.status === 201) await signIn("credentials", {email: email, password: password})
             if(res?.status === 400) setError(i => ({...i, alreadyexists: true}));
         }
     }
