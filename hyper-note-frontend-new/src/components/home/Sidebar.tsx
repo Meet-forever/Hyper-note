@@ -1,13 +1,16 @@
 import React, { useContext } from 'react'
-import { context } from '../../state_manager/reducers/userState'
 import { FaPlus } from "react-icons/fa"
 import UserBox from './sidebar/UserBox'
 import SidebarList from './sidebar/SidebarList'
+import { getMultiContext } from '../../state_manager/reducers'
+import { getContext } from '../../state_manager/reducers/userStates'
 
 const Sidebar = () => {
-    const { state, dispatch } = useContext(context)
+    const {state, dispatch} = getContext();
+    const {multiReducer} = getMultiContext()
+    const [prefstate] = multiReducer.preference 
     return (
-        <div className={!state.sidebar ? `hidden ` : ` bg-white absolute z-20 h-screen sm:static sm:w-70 md:w-80 flex flex-col`}>
+        <div className={!prefstate.sidebar ? `hidden ` : ` bg-white absolute z-20 h-screen sm:static sm:w-70 md:w-80 flex flex-col`}>
             <UserBox />
             <SidebarList /> 
             <div className='h-[6%] bg-[#f7f6f3]'>

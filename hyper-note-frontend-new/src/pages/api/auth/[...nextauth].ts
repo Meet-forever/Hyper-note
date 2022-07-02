@@ -4,7 +4,9 @@ import GoogleProvider from "next-auth/providers/google";
 // import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import clientPromise from "../../../lib/mongodb"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { getSession } from "next-auth/react";
 
+let userAccount: any = null;
 export default NextAuth({
     providers: [
         GoogleProvider({
@@ -64,7 +66,7 @@ export default NextAuth({
         CredentialsProvider({
             name: 'credentials',
             credentials: {},
-            async authorize(credentials) {
+            async authorize(credentials, req) {
                 const dev = process.env.NODE_ENV != "production"
                 const url = dev ? "http://localhost:3000" : ""
                 const res = await fetch(`${url}/api/login`, {
@@ -74,7 +76,8 @@ export default NextAuth({
                 })
                 const user = await res.json()
                 if (res.ok && user) {
-                    return user
+                    userAccount = user
+                    return user;
                 }
                 return null
             }
@@ -90,11 +93,20 @@ export default NextAuth({
             if (account?.access_token) {
                 token.accessToken = account.access_token
             }
+            if (typeof user !== typeof undefined) {
+                token.user = user;
+            }
             return token
         },
         session: async ({ session, token, user }) => {
             if (token?.access_token) {
                 session.accessToken = token.accessToken;
+            }
+            if (userAccount !== null) {
+                session.user = userAccount;
+            }
+            else if (typeof token !== typeof undefined) {
+                session.token = token;
             }
             return session
         }

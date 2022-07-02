@@ -7,9 +7,10 @@ import CoverImage from './CoverImage';
 import EmojiComponent from '../emoji/EmojiComponent';
 import ModalCover from '../modal/ModalCover';
 import { handleModalClick } from '../modal/modalHandler';
+import { getContext } from '../../state_manager/reducers/userStates';
 
 const UserPage = () => {
-    const { state } = useContext(context);
+    const { state } = getContext();
     const [isEmojiPackOn, setEmojiPack] = useState(false)
     const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
     return (

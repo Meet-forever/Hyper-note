@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { context } from '../../state_manager/reducers/userState'
+import React from 'react'
+import { getContext } from '../../state_manager/reducers/userStates'
 
 const TextContent = () => {
-    const { state } = useContext(context)
+    const { state } = getContext()
     return (
         <div className=" mx-auto w-2/3 break-words">
             <div className="font-black text-5xl">{state.selected.heading}</div>

@@ -1,5 +1,6 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { v4 } from "uuid"
+
 
 export interface UserList {
     id: string,
@@ -206,12 +207,16 @@ function stateFunction(state: UserContext, action: { type: string, payload: any 
     return initialState
 }
 
-type ContextType ={ state: UserContext, dispatch: Function } 
+interface ContextType { state: UserContext, dispatch: Function } 
 
-const userStateContext = createContext<undefined|ContextType>(undefined)
+export const userContext = createContext<undefined|ContextType>(undefined);
 
-export const UserProvider = userStateContext.Provider
+export const UserProvider = userContext.Provider
+
+export const getContext = () => {
+    const makeContext = useContext(userContext);
+    if(!makeContext) throw new Error("Check UserProvider");
+    return makeContext
+}
 export const reducer = stateFunction
-
-export const context = userStateContext
 export const defaultState = initialState

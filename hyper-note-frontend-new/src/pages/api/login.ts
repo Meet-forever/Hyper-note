@@ -25,5 +25,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         res.status(401);
         return
     }
-    res.status(200).json({ name: user.name, email: user.email, avatar: user.avatar })
+    res.status(200).json({ name: user.firstname, email: user.email, avatar: user.avatar })
 }

@@ -1,12 +1,17 @@
 import React, { useContext, useRef, useState } from 'react'
-import { context, UserList } from '../../../state_manager/reducers/userState';
+import { UserList } from '../../../state_manager/reducers/userState';
 import { FaTrash, FaStar, FaSearch } from "react-icons/fa"
 import ModalCover from '../../modal/ModalCover';
 import List from './List';
-
+import { getContext } from '../../../state_manager/reducers/userStates';
+import { getMultiContext } from '../../../state_manager/reducers';
 
 const SidebarList = () => {
-    const { state, dispatch } = useContext(context);
+    const {state, dispatch} = getContext()
+    // const {multiReducer} = getMultiContext()
+    // const {state, dispatch} = multiReducer.preference
+
+    // const {multiReduce} = useContext(context)
     const [popUp, setPopUp] = useState(false);
     const [coordinate, setCoordinate] = useState({ x: 0, y: 0 })
     const userID = useRef([]);

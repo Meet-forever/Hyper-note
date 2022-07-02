@@ -1,19 +1,22 @@
 import React, { useContext, useState } from 'react'
 import { FaBars, FaCog, FaPlus } from 'react-icons/fa'
 import { FiShare } from 'react-icons/fi'
-import { context } from '../../state_manager/reducers/userState';
+import { getMultiContext } from '../../state_manager/reducers';
+import { getContext } from '../../state_manager/reducers/userStates';
 import EmojiComponent from '../emoji/EmojiComponent';
 import ModalCover from '../modal/ModalCover';
 import { handleModalClick } from '../modal/modalHandler';
 
 const TopBar = () => {
-    const { state, dispatch } = useContext(context)
+    const { state } = getContext() 
+    const {multiReducer} = getMultiContext()
+    const [prefstate, prefdispatch] = multiReducer.preference
     const [isEmojiPackOn, setEmojiPack] = useState(false)
     const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
     return (
-        <div className={`${state.sidebar ? 'px-20' : 'px-14'} flex justify-between bg-white w-full items-center py-1 text-lg text-gray-600`}>
+        <div className={`${prefstate.sidebar ? 'px-20' : 'px-14'} flex justify-between bg-white w-full items-center py-1 text-lg text-gray-600`}>
             <div className="flex justify-start items-center gap-x-2 w-[50%] overflow-x-auto hidescroll">
-                {!state.sidebar && <button onClick={() => dispatch({ type: "CHANGE_SIDEBAR" })}><FaBars color="#a19f9a" /></button>}
+                {!prefstate.sidebar && <button onClick={() => prefdispatch({ type: "CHANGE_SIDEBAR" })}><FaBars color="#a19f9a" /></button>}
                 {state.selected.icon !== '' ?
                     <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className="text-sm">
                         {state.selected.icon}

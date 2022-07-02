@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Router from "next/router"
+// import { ApolloClient, ApolloProvider, InMemoryCache, gql } from '@apollo/client'
 
 const Home: NextPage = () => {
   return (
@@ -14,3 +15,11 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+// export async function getStaticProps(){
+//   const client = new ApolloClient({
+//     uri: '',
+//     cache: new InMemoryCache
+//   })
+
+// } 

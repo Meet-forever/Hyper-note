@@ -1,22 +1,25 @@
-import React, { useContext } from 'react'
-import { context } from '../../../state_manager/reducers/userState';
-import { FaChevronLeft, FaCog, FaUserAstronaut, FaSearch, FaUsers, FaSignOutAlt } from "react-icons/fa"
-import { signOut } from 'next-auth/react';
+import React from 'react'
+import { FaChevronLeft, FaUserAstronaut, FaSearch, FaUsers, FaSignOutAlt } from "react-icons/fa"
+import { signOut, useSession } from 'next-auth/react';
+import { getMultiContext } from '../../../state_manager/reducers';
 
 const UserBox = () => {
-    const { dispatch } = useContext(context);
+    const {multiReducer} = getMultiContext()
+    const [_, prefdispatch] = multiReducer.preference
+    const {data} = useSession()
+    const username = data?.user?.name ?? 'Guest'
     return (
         <div className=' h-[20%] sm:h-[21%] bg-[#f7f6f3] overflow-y-auto hidescroll py-2'>
             <div className="flex flex-col justify-center items-start ">
                 <div className="flex justify-between items-center px-4 w-full">
-                    <button className='flex justify-center  items-center gap-x-3 font-semibold text-[#a19f90] hover:bg-gray-200 p-1'>
+                    <button className='flex justify-center  items-center gap-x-3 font-semibold cursor-default text-[#a19f90] p-1'>
                         <FaUserAstronaut color="#a19f9a" />
-                        Meet's Note
+                        <span className=' inline-block capitalize'>{username}'s Note</span>
                     </button>
                     <button
                         type="button"
                         className="flex justify-center items-center hover:bg-gray-200 cursor-pointer p-1"
-                        onClick={() => dispatch({ type: "CHANGE_SIDEBAR" })}
+                        onClick={() => prefdispatch({type:"CHANGE_SIDEBAR"})}
                     >
                         <FaChevronLeft color="#a19f9a" />
                     </button>
