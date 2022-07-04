@@ -14,21 +14,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             if (!email || !password || !firstname || !lastname) {
                 res.status(400).json({ status: 400 })
             }
-            const userdb = (await clientPromise).db('testing').collection('users')
-            const user = await userdb.findOne({ email: email })
+            const db = (await clientPromise).db('testing')
+            const db_users = db.collection('users')
+            const user = await db_users.findOne({ email: email })
             if (user) {
                 console.log("User already exists!")
                 res.status(400).json({ status: 400 })
             } else {
                 const hpass = await hash(password, 12);
-                userdb.insertOne({
+                const db_notelist = db.collection('notelist')
+                db_notelist.insertOne({
+                    email: email,
+                    notes: []
+                })
+                db_users.insertOne({
                     firstname: firstname,
                     lastname: lastname,
                     email: email,
                     password: hpass,
                     saltrounds: process.env.SALTROUNDS,
                     avatar: 'default',
-                    userlist: [],
                     joined: new Date(),
                     provider: ""
                 })

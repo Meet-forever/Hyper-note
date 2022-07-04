@@ -1,11 +1,13 @@
 import clientPromise from "../../lib/mongodb";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { compare } from 'bcrypt'
+import { sign } from 'jsonwebtoken'
 
 type Data = {
-    name: string,
-    email: string,
-    avatar: string
+    authToken: any
+    // name: string,
+    // email: string,
+    // avatar: string
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -20,10 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         res.status(401);
         return;
     }
-    const result = await compare(password, user.password);
-    if (!result) {
-        res.status(401);
+    const result = await compare(password, user.password)
+    if(!result){
+        res.status(401)
         return
     }
-    res.status(200).json({ name: user.firstname, email: user.email, avatar: user.avatar })
+    const claim = {name: user.firstname, email: user.email, avatar: user.avatar}
+    const jws = sign(claim, process.env.SECRET!, {expiresIn: '1h'})
+    res.status(200).json({authToken: jws})
 }

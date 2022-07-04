@@ -9,7 +9,7 @@ import { getMultiContext } from '../../../state_manager/reducers';
 const SidebarList = () => {
     const {state, dispatch} = getContext()
     // const {multiReducer} = getMultiContext()
-    // const {state, dispatch} = multiReducer.preference
+    // const [prefstate, prefdispatch] = multiReducer.preference
 
     // const {multiReduce} = useContext(context)
     const [popUp, setPopUp] = useState(false);

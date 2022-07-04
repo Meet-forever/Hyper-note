@@ -3,6 +3,7 @@ import { FaEllipsisH, FaPlus } from 'react-icons/fa'
 import { handleModalClick } from '../../modal/modalHandler'
 import { context, UserList } from "../../../state_manager/reducers/userState"
 import { getContext } from '../../../state_manager/reducers/userStates'
+import { getMultiContext } from '../../../state_manager/reducers'
 
 
 type Props = {
@@ -18,6 +19,9 @@ type Props = {
 
 const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
     const { state, dispatch } = getContext()
+    const {multiReducer} = getMultiContext()
+    const [prefstate, prefdispatch] = multiReducer.preference
+    
     return (
         <div className='w-[12rem] sm:w-[14rem]'>
             <div className={`w-full justify-between items-center px-1 flex`}>
