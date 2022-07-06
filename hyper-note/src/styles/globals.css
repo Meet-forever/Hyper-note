@@ -45,3 +45,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(172, 172, 172); 
 }
+
+.childbox{
+  display: none;
+}
+.parentbox:hover .childbox{
+  display: flex;
+}
