@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaChevronLeft, FaUserAstronaut, FaSearch, FaUsers, FaSignOutAlt } from "react-icons/fa"
 import { signOut, useSession } from 'next-auth/react';
-import { getMultiContext } from '../../../state_manager/reducers';
+import { getMultiContext } from '../../../state_manager';
 
 const UserBox = () => {
     const {multiReducer} = getMultiContext()
@@ -9,7 +9,7 @@ const UserBox = () => {
     const {data} = useSession()
     const username = data?.user?.name ?? 'Guest'
     return (
-        <div className=' h-[20%] sm:h-[21%] bg-[#f7f6f3] overflow-y-auto hidescroll py-2'>
+        <div className=' h-[20%] text-[0.92rem] sm:h-[21%] bg-[#f7f6f3] overflow-y-auto hidescrollx py-2'>
             <div className="flex flex-col justify-center items-start ">
                 <div className="flex justify-between items-center px-4 w-full">
                     <button className='flex justify-center  items-center gap-x-3 font-semibold cursor-default text-[#a19f90] p-1'>

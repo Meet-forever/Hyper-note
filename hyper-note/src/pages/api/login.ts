@@ -4,7 +4,7 @@ import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
 
 type Data = {
-    authToken: any
+    authToken?: any
     // name: string,
     // email: string,
     // avatar: string
@@ -13,21 +13,18 @@ type Data = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     const { email, password } = req.body;
     if (!email || !password) {
-        res.status(400)
-        return
+        return res.status(400).json({})
     }
     const userdb = (await clientPromise).db('testing').collection('users')
     const user = await userdb.findOne({ email: email })
     if (!user) {
-        res.status(401);
-        return;
+        return res.status(401).json({});
     }
     const result = await compare(password, user.password)
     if(!result){
-        res.status(401)
-        return
+        return res.status(401).json({})
     }
     const claim = {name: user.firstname, email: user.email, avatar: user.avatar}
     const jws = sign(claim, process.env.SECRET!, {expiresIn: '1h'})
-    res.status(200).json({authToken: jws})
+    return res.status(200).json({authToken: jws})
 }

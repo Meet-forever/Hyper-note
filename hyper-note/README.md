@@ -19,12 +19,12 @@ Future Goals:
 - [ ] JWT Token
     - [x] AccessToken
     - [ ] Refresh Token
-- [ ] Crud
+- [x] Crud for Sidebar and Page
     - [x] Adding List and Page 
     - [x] Deleting List and Page
-    - [ ] Updating and Page 
+    - [x] Updating and Page 
+- [ ] Dynamic Cover Image Selection
 - [ ] Caching
     - [ ] Deque and LRU
-- [ ] Dynamic Cover Image Selection
 - [ ] Dark mode
 - [ ] Implement stack based editor

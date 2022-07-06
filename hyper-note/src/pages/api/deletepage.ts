@@ -9,16 +9,15 @@ export default authenticated(async function handler(req: NextApiRequest, res: Ne
     const pages = (await clientPromise).db('testing').collection('pages')
     const {page_id} = req.body
     if(!page_id){
-        res.status(400).end()
-        return
+        return res.status(400).json({})
     }
     await pages.deleteOne({"_id": new ObjectId(page_id)})
-    res.status(201)
+    return res.status(201).json({})
 })
 
 
 // To Turn off useless Warning: 
-// API resolved without sending a response for /api/notelist, this may result in stalled requests.
+// API resolved without sending a response for /api/deletepage, this may result in stalled requests.
 export const config = {
     api: {
         externalResolver: true,

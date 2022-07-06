@@ -5,14 +5,16 @@ export type Page = {
     heading: string,
     icon: string,
     cover: string,
+    path: string[],
     notes: any[]
-}
+} | {}
 
 export const initialPage:Page = {
     ptr: '',
     heading: '',
     icon: '',
     cover: '',
+    path: [],
     notes: []
 } 
 

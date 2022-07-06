@@ -1,14 +1,12 @@
 import React from 'react'
-import { getMultiContext } from '../../state_manager/reducers'
-import { getContext } from '../../state_manager/reducers/userStates'
+import { getMultiContext } from '../../state_manager'
 
 const TextContent = () => {
-    const { state } = getContext()
     const {multiReducer} = getMultiContext()
-    const [sidebarlistState, sidebarlistDispatch] = multiReducer.sidebarList
+    const [prefstate] = multiReducer.preference
     return (
         <div className=" mx-auto w-2/3 break-words">
-            <div className="font-black text-5xl">{state.selected.heading}</div>
+            <div className="font-black text-5xl">{prefstate.selected.heading}</div>
             <br/>
             <p className=''> Type here...</p>
             <br/>

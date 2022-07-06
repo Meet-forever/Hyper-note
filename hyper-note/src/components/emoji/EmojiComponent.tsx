@@ -1,14 +1,17 @@
 import { IEmojiData } from 'emoji-picker-react';
 import React from 'react'
-import { context } from '../../state_manager/reducers/userState';
 import dynamic from 'next/dynamic';
-import { getContext } from '../../state_manager/reducers/userStates';
+import { getMultiContext } from '../../state_manager';
 const Picker = dynamic(() => import('emoji-picker-react'), { ssr: false });
 
 const EmojiComponent = () => {
-    const { state, dispatch } = getContext()
+    const {multiReducer} = getMultiContext()
+    const [state, sidebardispatch] = multiReducer.sidebarList
+    const [selectedState, prefdispatch] = multiReducer.preference
+
     const handleEmoji = (e: React.MouseEvent<Element, MouseEvent>, emojiObj: IEmojiData) => {
-        dispatch({ type: 'UPDATE_ICON', payload: {id: state.selected.id, emoji: emojiObj.emoji, path: state.selected.path} })
+        sidebardispatch({ type: 'UPDATE_ICON', payload: {id: selectedState.selected.id, emoji: emojiObj.emoji, path: selectedState.selected.path} })
+        prefdispatch({type: "UPDATE_SIDEBAR", payload: {update: {icon: emojiObj.emoji}}})
     }
     return (
         <div onClick={(e) => e.stopPropagation()}>

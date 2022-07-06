@@ -8,26 +8,18 @@ export default authenticated(async function handler(req: NextApiRequest, res: Ne
     const pages = (await clientPromise).db('testing').collection('pages')
     const { ptr } = req.body
     if (!ptr) {
-        res.end()
-        return
+        return res.status(400).json({})
     }
-    let page = null;
-    page = await pages.findOne({ptr:ptr})
+    const page = await pages.findOne({ptr: `${optional.decoded.email}-${ptr}`}, {projection: { _id: 0}})
     if(page){
-        res.json({})
-        res.end();
-        return
+        return res.status(200).json({page: page.notes})
     }
-    await pages.insertOne({
-        ptr: ptr,
-        heading: 'Untitled',
-        icon: '📄',
-        cover: '/images/themes/test2.jpg',
+    const newpage = {
+        ptr: `${optional.decoded.email}-${ptr}`,
         notes: []
-    })
-    page = await pages.findOne({ptr: ptr})
-    res.json({page_id: page?._id})
-    res.end()
+    }
+    await pages.insertOne(newpage)
+    return res.status(201).json({note: newpage.notes})
 })
 
 

@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react'
-import { context } from '../../state_manager/reducers/userState'
+import React, { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import TextContent from './TextContent';
 import TopBar from './TopBar';
@@ -7,17 +6,18 @@ import CoverImage from './CoverImage';
 import EmojiComponent from '../emoji/EmojiComponent';
 import ModalCover from '../modal/ModalCover';
 import { handleModalClick } from '../modal/modalHandler';
-import { getContext } from '../../state_manager/reducers/userStates';
+import { getMultiContext } from '../../state_manager';
 
 const UserPage = () => {
-    const { state } = getContext();
+    const {multiReducer} = getMultiContext()
+    const [state,_] = multiReducer.preference
     const [isEmojiPackOn, setEmojiPack] = useState(false)
     const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
     return (
         Object.keys(state.selected).length !== 0 ? (
             <div className={`h-full text-2xl font-semibold w-full overflow-y-auto`}>
                 <TopBar />
-                {state.selected.cover !== "" ? <CoverImage /> : <div className="h-[20vh]"></div>}
+                <CoverImage />
                 <span className="relative -top-10 left-20" >
                     {state.selected.icon !== '' ?
                         <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-6xl'>{state.selected.icon}</button>

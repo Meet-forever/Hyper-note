@@ -1,15 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Image from 'next/image'
-import { context } from '../../state_manager/reducers/userState'
-import { getContext } from '../../state_manager/reducers/userStates'
+import { getMultiContext } from '../../state_manager'
 const CoverImage = () => {
-    const { state } = getContext()
+    const {multiReducer} = getMultiContext()
+    const [state,_]= multiReducer.preference
     return (
         <div className=''>
             <div className="h-[30vh] w-full relative">
-                <Image src={state.selected.cover} alt="pattern" layout='fill' objectFit='cover' />
+                <Image className='absolute' src="/images/themes/test2.jpg" alt="pattern" layout='fill' objectFit='cover' /> 
+                {state.selected.cover !== ""? <Image className='absolute' src={state.selected.cover} alt="pattern" layout='fill' objectFit='cover' />: <></>}
+                <div className='z-20 relative'>lol</div>
             </div>
-            {/* <div className =" bg-red"> hello</div> */}
         </div>
     )
 }

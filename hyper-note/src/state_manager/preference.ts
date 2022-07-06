@@ -1,20 +1,22 @@
-import { useReducer } from "react"
+import { Page } from "./page"
 
 export type Preference = {
     theme: string,
-    selected: Promise<any> | any
+    selected: any
     sidebar: boolean
+    token: string
 }
 
 export const initialPreference: Preference = {
     theme: "light",
     selected: {},
     sidebar: true,
+    token: '' 
 }
 
 export type PreferenceAction = {
-    type: "CHANGE_THEME" | "SET_CURRENT_PAGE" | "CHANGE_SIDEBAR",
-    payload?: undefined | {color?: string, select?: any}
+    type: "CHANGE_THEME" | "SET_CURRENT_PAGE" | "CHANGE_SIDEBAR" | "UPDATE_SIDEBAR",
+    payload?: undefined | {color?: string, select?: Page, update?: any}
 }
 
 export const preferenceReducerFunction = (state:Preference, action: PreferenceAction): Preference => {
@@ -36,6 +38,15 @@ export const preferenceReducerFunction = (state:Preference, action: PreferenceAc
             return {
                 ...state,
                 selected: payload?.select ?? state.selected
+            }
+        }
+        case "UPDATE_SIDEBAR" : {
+            return {
+                ...state,
+                selected: {
+                    ...state.selected,
+                    ...(payload?.update)
+                }
             }
         }
         default: return state

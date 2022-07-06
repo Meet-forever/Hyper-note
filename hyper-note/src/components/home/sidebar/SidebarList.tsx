@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react'
 import { FaTrash, FaStar} from "react-icons/fa"
 import ModalCover from '../../modal/ModalCover';
 import List from './List';
-import { getMultiContext } from '../../../state_manager/reducers';
-import { SidebarList } from '../../../state_manager/reducers/sidebarList';
+import { getMultiContext } from '../../../state_manager';
+import { SidebarList } from '../../../state_manager/sidebarList';
 
 const SidebarList = () => {
     const {multiReducer} = getMultiContext()
@@ -14,7 +14,7 @@ const SidebarList = () => {
     const userID = useRef([]);
     const handleDelete = () => {
         if (userID.current == []) return;
-        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1] } })
+        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1]} })
         if(prefstate.selected && prefstate.selected.id === userID.current[0]){
             prefdispatch({type: "SET_CURRENT_PAGE", payload: {select: {}} })
         }
@@ -36,7 +36,7 @@ const SidebarList = () => {
     }
     )
     return (
-        <div className='h-[72%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescroll overflow-auto px-3'>
+        <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly overflow-auto px-3'>
             {narray(sidebarlistState)}
             {
                 popUp ?
