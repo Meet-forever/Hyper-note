@@ -8,18 +8,15 @@ export default authenticated(async function handler(req: NextApiRequest, res: Ne
     const note_list = (await clientPromise).db('testing').collection('notelist')
     const email = optional.decoded.email
     if (!email) {
-        res.status(400).json({})
-        res.end()
-        return
+        return res.status(400).json({})
+        
     }
     const note = await note_list.findOne({ email: email })
     if (!note) {
-        res.status(400).json({})
-        res.end()
-        return
+        return res.status(400).json({})
+        
     }
-    res.status(200).json({ notes: note.notes })
-    res.end()
+    return res.status(200).json({ notes: note.notes })
 })
 
 

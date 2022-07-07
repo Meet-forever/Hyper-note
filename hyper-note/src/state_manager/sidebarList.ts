@@ -66,6 +66,20 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
             }
             return updateIcon(state)
         }
+        case "UPDATE_COVER": {
+            const { id, cover, path } = payload
+            if (!id || !cover || !path) return state
+            const temp = [...path]
+            const updateCover = (arrobj: SidebarList[]): SidebarList[] => {
+                const val = (temp.length == 0) ? "" : temp.shift();
+                if (val === "") {
+                    return arrobj.map((data) => (data.id === id) ? { ...data, cover: cover } : data)
+                } else {
+                    return arrobj.map((data) => (data.id === val) ? { ...data, children: updateCover(data.children) } : data)
+                }
+            }
+            return updateCover(state)
+        }
         default: return state
     }
 }

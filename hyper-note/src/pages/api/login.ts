@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const userdb = (await clientPromise).db('testing').collection('users')
     const user = await userdb.findOne({ email: email })
     if (!user) {
-        return res.status(401).json({});
+        return res.status(401).json({})
     }
     const result = await compare(password, user.password)
     if(!result){

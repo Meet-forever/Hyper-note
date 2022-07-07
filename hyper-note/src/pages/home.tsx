@@ -7,8 +7,8 @@ import { MultiContextProvider } from '../state_manager/index'
 import { preferenceReducerFunction, initialPreference } from '../state_manager/preference'
 import { getinitialSidebarList, sideBarListReducerFunction } from '../state_manager/sidebarList'
 import axios from "axios"
-const home = ({ session, userlist }: { session: any, userlist: any }) => {
-    const preference = useReducer(preferenceReducerFunction, initialPreference)
+const home = ({ session, userlist, theme_images }: { session: any, userlist: any, theme_images: string[] }) => {
+    const preference = useReducer(preferenceReducerFunction, {...initialPreference, theme_images: theme_images})
     const sidebarList = useReducer(sideBarListReducerFunction, getinitialSidebarList(userlist.notes))
     const multireducers = {
         preference,
@@ -19,7 +19,8 @@ const home = ({ session, userlist }: { session: any, userlist: any }) => {
     useEffect(() => {
         const updatesidebarlist = setTimeout(() => {
             axios.post("/api/updatesidebarlist", {
-                notelist: sidebarList[0]
+                notelist: sidebarList[0],
+                provider: session.provider
             })
         }, 2000)
         return () => clearTimeout(updatesidebarlist)
@@ -39,6 +40,14 @@ const home = ({ session, userlist }: { session: any, userlist: any }) => {
 }
 
 export async function getServerSideProps(context: any) {
+    const path = await import("path")
+    const fs = await import("fs/promises")
+    const imgfolder = path.join(
+        ...(__dirname
+        .split(path.sep)
+        .slice(0, -3)
+        .concat(["public", "images", "themes"])))
+    const theme_images = await fs.readdir(imgfolder)
     const session = await getSession(context);
     if (!session) return {
         redirect: {
@@ -52,15 +61,18 @@ export async function getServerSideProps(context: any) {
         headers: {
             "Content-Type": "application/json",
             'Authorization': BEARER
-        }
+        },
+        body:JSON.stringify({
+            provider: session.provider
+        })
     }).then(res => res.json()).then(i => i).catch(err => console.error(err.message))
-    if (!userlist || !userlist.notes) return {
+    if (!userlist || !("notes" in userlist)) return {
         redirect: {
             destination: '/',
             permanent: false
         }
     }
-    return { props: { session, userlist } };
+    return { props: { session, userlist, theme_images } };
 }
 
 export default home

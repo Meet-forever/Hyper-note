@@ -1,17 +1,17 @@
 import { Page } from "./page"
 
 export type Preference = {
-    theme: string,
-    selected: any
-    sidebar: boolean
-    token: string
+    color_mode: string,
+    selected: any,
+    sidebar: boolean,
+    theme_images: string[]
 }
 
 export const initialPreference: Preference = {
-    theme: "light",
+    color_mode: "light",
     selected: {},
     sidebar: true,
-    token: '' 
+    theme_images: []
 }
 
 export type PreferenceAction = {
@@ -31,7 +31,7 @@ export const preferenceReducerFunction = (state:Preference, action: PreferenceAc
         case "CHANGE_THEME" : {
             return{
                 ...state,
-                theme: payload?.color ?? state.theme  
+                color_mode: payload?.color ?? state.color_mode  
             }
         }
         case "SET_CURRENT_PAGE" : {

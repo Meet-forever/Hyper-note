@@ -23,7 +23,7 @@ Future Goals:
     - [x] Adding List and Page 
     - [x] Deleting List and Page
     - [x] Updating and Page 
-- [ ] Dynamic Cover Image Selection
+- [x] Dynamic Cover Image Selection
 - [ ] Caching
     - [ ] Deque and LRU
 - [ ] Dark mode

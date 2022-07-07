@@ -6,24 +6,23 @@ import clientPromise from "../../../lib/mongodb"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { verify } from "jsonwebtoken"
 
-let userAccount: any = null;
 export default NextAuth({
     providers: [
         GoogleProvider({
             clientId: String(process.env.GOOGLE_CLIENT_ID),
             clientSecret: String(process.env.GOOGLE_CLIENT_SECRET),
             profile: async (profile, token) => {
-                const db = (await clientPromise).db()
+                const db = (await clientPromise).db('testing')
                 const db_user = db.collection('users')
                 const user: any = await db_user.findOne({ email: profile.email })
                 let data;
                 if (!user) {
                     const db_notelist = db.collection('notelist')
-                    db_notelist.insertOne({
+                   await db_notelist.insertOne({
                         email: profile.email,
                         notes: []
                     })
-                    db_user.insertOne({
+                    await db_user.insertOne({
                         firstname: profile.name,
                         lastname: '',
                         email: profile.email,
@@ -45,17 +44,17 @@ export default NextAuth({
             clientId: String(process.env.GITHUB_ID),
             clientSecret: String(process.env.GITHUB_SECRET),
             profile: async (profile, token) => {
-                const db = (await clientPromise).db()
+                const db = (await clientPromise).db('testing')
                 const db_user = db.collection('users')
                 const user: any = await db_user.findOne({ email: profile.email })
                 let data;
                 if (!user) {
                     const db_notelist = db.collection('notelist')
-                    db_notelist.insertOne({
+                    await db_notelist.insertOne({
                         email: profile.email,
                         notes: []
                     })
-                    db_user.insertOne({
+                    await db_user.insertOne({
                         firstname: profile.name,
                         lastname: '',
                         email: profile.email,
@@ -88,8 +87,11 @@ export default NextAuth({
                 if (res.ok && userres) {
                     const userinfo = verify(userres.authToken, process.env.SECRET!)
                     if (typeof userinfo === "object") {
-                        userAccount = { token: userres.authToken }
-                        return userinfo
+                        return {
+                            ...userinfo,
+                            access_token: userres.authToken,
+                            provider: 'hypernote'
+                        }
                     }
                 }
                 return null
@@ -106,17 +108,22 @@ export default NextAuth({
     callbacks: {
         jwt: async ({ token, account, profile, user }) => {
             // Persist the OAuth access_token to the token right after signin
-            if (account && userAccount?.token) account.access_token = userAccount.token
             if (account?.access_token) {
+                // https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=
+                console.log(account)
                 token.accessToken = account.access_token
+                token.provider = account.provider
             }
-            return Promise.resolve(token)
+            if(user?.access_token){
+                token.accessToken = user.access_token
+                token.provider = user.provider
+            }
+            return token
         },
         session: async ({ session, token, user }) => {
-            if (token?.accessToken) {
-                session.accessToken = token.accessToken;
-            }
-            return Promise.resolve(session)
+            session.accessToken = token.accessToken;
+            session.provider = token.provider    
+            return session
         }
     },
     secret: String(process.env.SECRET)

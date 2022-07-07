@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { getMultiContext } from '../../state_manager'
-import ModalCover from '../modal/ModalCover'
+import ThemeModal from '../modal/ThemeModal'
 const CoverImage = () => {
     const { multiReducer } = getMultiContext()
     const [state, _] = multiReducer.preference
     const [isCover, setCover] = useState(false)
-    const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
     return (
         <div className=''>
             <div className="h-[30vh] w-full relative">
@@ -18,8 +17,8 @@ const CoverImage = () => {
                     </div>
                 </div>
                 {isCover ?
-                    <div onClick={()=> setCover(i => !i)} className='fixed top-0 z-10 w-full h-screen'>
-                        <div className='relative top-[25%] left-[20%] z-10 w-[50%] h-[50%] bg-purple-400' onClick={(e)=> e.stopPropagation()} ></div>
+                    <div onClick={()=> setCover(i => !i)} className='fixed left-0 top-0 z-20 w-full h-screen'>
+                    <ThemeModal />
                     </div> : <div></div>}
             </div>
         </div>

@@ -20,7 +20,7 @@ const UserPage = () => {
                 <CoverImage />
                 <span className="relative -top-10 left-20" >
                     {state.selected.icon !== '' ?
-                        <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-6xl'>{state.selected.icon}</button>
+                        <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-6xl relative z-10'>{state.selected.icon}</button>
                         :
                         <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)}>
                             <abbr title='Add icon'>
