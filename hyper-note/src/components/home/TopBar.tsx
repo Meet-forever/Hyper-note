@@ -25,7 +25,7 @@ const TopBar = () => {
                     <ModalCover coordinatePos={coordinate} handleClick={setEmojiPack}>
                         <EmojiComponent />
                     </ModalCover> : ''}
-                <h1 className='overflow-hidden whitespace-nowrap text-ellipsis text-[#a19f9a]'>{state.selected.heading}</h1>
+                <h1 className='overflow-hidden whitespace-nowrap text-ellipsis text-sm text-[#a19f9a]'>{state.selected.heading}</h1>
             </div>
             <div className="flex justify-center items-center gap-x-4">
                 <button><FiShare color="#a19f9a" /></button>

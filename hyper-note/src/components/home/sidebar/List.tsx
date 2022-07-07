@@ -20,9 +20,9 @@ const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
     const { multiReducer } = getMultiContext()
     const [prefstate, prefdispatch] = multiReducer.preference
     const [_, sidebarlistdispatch] = multiReducer.sidebarList
-    const handleCurrentPage = async() => {
+    const handleCurrentPage = async () => {
         const notes = await pagecache(data.id)
-        if(notes) prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: {...data, notes: notes.notes, ptr: data.id} } })
+        if (notes) prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: { ...data, notes: notes.notes, ptr: data.id } } })
     }
     return (
         <div className='w-[12rem] sm:w-[12rem]'>
@@ -34,7 +34,7 @@ const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
                                 <button className='text-[0.8rem]'> {data.icon !== '' ? data.icon : "📄"} </button>
                                 <button className='  whitespace-nowrap text-ellipsis overflow-hidden w-full text-left'
                                     onClick={handleCurrentPage} >
-                                    {data.heading}
+                                    {data.heading ? data.heading : "Untitled"}
                                 </button>
                             </span>
                             <div className="flex items-center justify-center w-1/4">
@@ -47,7 +47,7 @@ const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
                                     <FaEllipsisH color='#a19f9a' />
                                 </button>
                                 <button
-                                    onClick={() => sidebarlistdispatch({ type: "ADD_PAGE", payload: { path: data.path.concat([data.id])} })}
+                                    onClick={() => sidebarlistdispatch({ type: "ADD_PAGE", payload: { path: data.path.concat([data.id]) } })}
                                     className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
                                     <FaPlus color='#a19f9a' />
                                 </button>
