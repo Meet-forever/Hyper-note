@@ -11,7 +11,7 @@ const ThemeModal = () => {
         prefdispatch({ type: "UPDATE_SIDEBAR", payload: { update: { cover: coverimg } } })
     }
     return (
-        <div className='p-1 px-2 relative top-[25%] mx-auto overflow-clip z-10 bg-[#e7e7e7] w-[40%] h-[35%]'>
+        <div className='p-1 px-2 relative top-[25%] mx-auto overflow-clip z-10 bg-[#e7e7e7] w-[50%] h-[40%] sm:w-[40%] sm:h-[35%]'>
             {/* <div>something</div> */}
             <div className='w-full h-full overflow-y-scroll'>
                 {/* <div>Future</div> */}

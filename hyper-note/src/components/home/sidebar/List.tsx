@@ -21,16 +21,16 @@ const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
     const [prefstate, prefdispatch] = multiReducer.preference
     const [_, sidebarlistdispatch] = multiReducer.sidebarList
     const handleCurrentPage = async () => {
-        const notes = await pagecache(data.id)
-        if (notes) prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: { ...data, notes: notes.notes, ptr: data.id } } })
+        prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: data } })
+        // const notes = await pagecache(data.id)
     }
     return (
         <div className='w-[12rem] sm:w-[12rem]'>
             <div className={`w-full justify-between items-center px-1 flex`}>
                 <details className={`text-[#a19f9a] text-sm w-full `}  >
-                    <summary className={`px-2 py-[0.2rem] w-full font-semibold ${data.id === prefstate.selected.ptr ? "bg-gray-200" : ""} hover:bg-gray-200 `}>
+                    <summary className={`pl-2 py-[0.2rem] w-full font-semibold ${data.id === prefstate.selected.ptr ? "bg-gray-200" : ""} hover:bg-gray-200 `}>
                         <div className='inline-flex justify-between w-[88%] sm:w-[91%] '>
-                            <span className='flex gap-x-2 w-full'>
+                            <span className='flex gap-x-2 w-3/4'>
                                 <button className='text-[0.8rem]'> {data.icon !== '' ? data.icon : "📄"} </button>
                                 <button className='  whitespace-nowrap text-ellipsis overflow-hidden w-full text-left'
                                     onClick={handleCurrentPage} >

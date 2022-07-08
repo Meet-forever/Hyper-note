@@ -46,9 +46,14 @@
   background: rgb(172, 172, 172); 
 }
 
+.childbox::before{
+  padding-left: 4px;
+}
 .childbox{
-  display: none;
+  /* display: none; */
+  opacity: 0;
 }
 .parentbox:hover .childbox{
   display: flex;
+  opacity: 1;
 }
