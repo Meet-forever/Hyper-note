@@ -14,7 +14,7 @@ const Sidebar = () => {
             <SidebarList /> 
             <div className='h-[6%] bg-[#f7f6f3]'>
                 <div className='h-full w-full flex justify-end items-center flex-col'>
-                    <button className="w-full" onClick={() => sidebarlistDispatch({ type: 'ADD_PAGE', payload: {path: []}})}>
+                    <button className="w-full" onClick={() => sidebarlistDispatch({ type: 'ADD_PAGE', payload: {path: ["root"]}})}>
                         <div className="flex justify-center text-[0.92rem] font-semibold text-[#a19f90] gap-x-3 items-center hover:bg-gray-200 w-full p-2 cursor-pointer">
                             <FaPlus color="gray" />
                             Add Page

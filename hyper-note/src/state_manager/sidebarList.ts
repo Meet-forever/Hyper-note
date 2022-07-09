@@ -20,51 +20,38 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
         case "ADD_PAGE": {
             const { path } = payload
             if (!path) return state;
-            const temp = [...path];
-            const appendPage = (arrobj: SidebarList[]): SidebarList[] => {
-                const val = (temp.length == 0) ? "" : temp.shift();
-                if (val === "") {
-                    const id = v4()
-                    return [...arrobj, { id: id, heading: "Untitled", icon: '📄', cover: '', path: path, children: [] }]
-                }
-                else {
-                    return arrobj.map((data) => (data.id === val) ? { ...data, children: appendPage(data.children) } : data)
-                }
+            const newID = v4()
+            const defaultlist = { id: newID, heading: "Untitled", icon: '📄', cover: '', path: ['root'], children: [] }
+            const list = { id: newID, heading: "Untitled", icon: '📄', cover: '', path:  path, children: [] } 
+            const addBelow = (index: number) =>{
+                state.splice(index+1, 0, list)
+                return [...state]
             }
-            return appendPage(state)
+            const addList = () =>{
+                if(path.length < 1) return state
+                let lastindex = null
+                for(let i = 0 ; i < state.length; i++){
+                    if(state[i].id === path[path.length-1]) lastindex = i
+                }
+                return (lastindex === null)?state : addBelow(lastindex)
+            }
+            return path[path.length-1] === "root"? [...state, defaultlist]: addList()
         }
+
         case "DELETE_LIST": {
-            const { id, path } = payload;
-            if (!id || !path) return state
-            const filterobj = (arrobj: SidebarList[], id: string) => {
-                const target = (path.length !== 0) ? path.shift() : "";
-                for (let i = 0; i < arrobj.length; i++) {
-                    const current = arrobj[i];
-                    if (target == "" && current.id == id) {
-                        arrobj.splice(i, 1);
-                        break;
-                    } else if (target == current.id) {
-                        filterobj(current.children, id);
-                        break;
-                    }
-                }
-            }
-            filterobj(state, id);
+            const { id } = payload;
+            if (!id) return state
+            const index = state.findIndex(i => i.id === id)
+            state.splice(index, 1)
             return [...state]
         }
         case "UPDATE_CONTENT": {
-            const { id, update, path } = payload
-            if (!id || !update || !path) return state
-            const temp = [...path].reverse()
-            const updateIcon = (arrobj: SidebarList[]): SidebarList[] => {
-                const val = (temp.length == 0) ? "" : temp.pop()
-                if (val === "") {
-                    return arrobj.map((data) => (data.id === id) ? { ...data, ...update } : data)
-                } else {
-                    return arrobj.map((data) => (data.id === val) ? { ...data, children: updateIcon(data.children) } : data)
-                }
-            }
-            return updateIcon(state)
+            const { id, update } = payload
+            if(!id || !update) return state
+            const index = state.findIndex(i => i.id === id)
+            return [...state.slice(0, index), 
+                    {...state[index], ...update}, 
+                ...state.slice(index+1, state.length)]
         }
         default: return state
     }

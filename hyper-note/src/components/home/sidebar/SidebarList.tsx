@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
-import { FaTrash, FaStar} from "react-icons/fa"
+import { FaTrash, FaStar } from "react-icons/fa"
 import ModalCover from '../../modal/ModalCover';
 import List from './List';
 import { getMultiContext } from '../../../state_manager';
 import { SidebarList } from '../../../state_manager/sidebarList';
 
 const SidebarList = () => {
-    const {multiReducer} = getMultiContext()
+    const { multiReducer } = getMultiContext()
     const [sidebarlistState, sidebarlistDispatch] = multiReducer.sidebarList
     const [prefstate, prefdispatch] = multiReducer.preference
     const [popUp, setPopUp] = useState(false);
@@ -14,9 +14,9 @@ const SidebarList = () => {
     const userID = useRef([]);
     const handleDelete = () => {
         if (userID.current == []) return;
-        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1]} })
-        if(prefstate.selected && prefstate.selected.id === userID.current[0]){
-            prefdispatch({type: "SET_CURRENT_PAGE", payload: {select: {}} })
+        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0] } })
+        if (prefstate.selected && prefstate.selected.id === userID.current[0]) {
+            prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: {} } })
         }
         setPopUp(false)
     }
@@ -28,16 +28,34 @@ const SidebarList = () => {
                 setPopUp={setPopUp}
                 setCoordinate={setCoordinate}
                 userID={userID}
-                data = {data}
-                 >
+                data={data}
+            >
                 {data.children === [] ? <></> : <>{narray(data.children)}</>}
             </List>
         )
     }
     )
+
+    const narrayMapper = (start: number, userlist: SidebarList[], store: SidebarList[], curHeight: number): [number, SidebarList[]] => {
+        let i = null
+        for (i = start; i < userlist.length; i++) {
+            if (userlist[i].path.length === curHeight) {
+                store.push(userlist[i])
+            }
+            else if (userlist[i].path.length > curHeight) {
+                const nestedChildren = narrayMapper(i, userlist, [], curHeight + 1)
+                store[store.length - 1].children = nestedChildren[1]
+                i = nestedChildren[0]
+            }
+            else {
+                return [i - 1, store]
+            }
+        }
+        return [i - 1, store]
+    }
     return (
-        <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly overflow-auto px-3'>
-            {narray(sidebarlistState)}
+        <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrollx overflow-auto px-3'>
+            {narray(narrayMapper(0, [...sidebarlistState], [], 1)[1])}
             {
                 popUp ?
                     <ModalCover coordinatePos={coordinate} handleClick={setPopUp} >

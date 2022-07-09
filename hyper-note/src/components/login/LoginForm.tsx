@@ -29,9 +29,9 @@ const LoginForm = () => {
     return (
         <div className="mx-auto max-w-xs w-full pb-8 pt-8 px-8 bg-opacity-70 rounded-xl z-10 bg-gray-100 shadow-lg ">
             <form className='flex flex-col gap-y-2' onSubmit={handleSubmit}>
-                <input value='guest@example.com' onChange={(e) => setLogin(i => ({ ...i, email: e.target.value }))} required={true} name="email" type="email" className={`px-4 py-3 w-full text-md rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-100 ${error.email ? `border border-red-500` : ``}`} placeholder="Email" />
+                <input value={login.email} onChange={(e) => setLogin(i => ({ ...i, email: e.target.value }))} required={true} name="email" type="email" className={`px-4 py-3 w-full text-md rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-100 ${error.email ? `border border-red-500` : ``}`} placeholder="Email" />
                 {error.email !== "" ? <p className="text-red-500 px-2 text-xs italic">{error.email}</p> : <p className="px-2 w-full"> </p>}
-                <input value='12345678' onChange={(e) => setLogin(i => ({ ...i, password: e.target.value }))} required={true} name="password" type="password" className={`px-4 py-3 w-full text-md rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-100 ${error.password ? `border border-red-500` : ``} `} placeholder="Password" />
+                <input value={login.password} onChange={(e) => setLogin(i => ({ ...i, password: e.target.value }))} required={true} name="password" type="password" className={`px-4 py-3 w-full text-md rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-100 ${error.password ? `border border-red-500` : ``} `} placeholder="Password" />
                 {error.password !== "" ? <p className="text-red-500 px-2 text-xs italic">{error.password}</p> : <p className="px-2 w-full"> </p>}
                 <div className='block md:flex justify-center items-center'>
                     <button onClick={(e) => e.stopPropagation()} className="p-3 text-gray-700 font-semibold rounded-md text-center w-full bg-blue-300 hover:bg-blue-400">Login</button>

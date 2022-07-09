@@ -7,7 +7,9 @@ Future Goals:
 - [x] Emoji Integration
 - [x] Dynamic Emoji Selection
 - [x] Modal for cover image and sidebar
-- [x] Implement n-array tree for the sidebar tree
+- [x] Linear data Strcture to Sidebar Tree mapper function
+- [x] Implement n-array tree for the sidebar tree using mapper function
+    - O(n) worst case, where n is total number of documents
     - [x] Insertion
     - [x] Deletion
     - [x] Update emoji

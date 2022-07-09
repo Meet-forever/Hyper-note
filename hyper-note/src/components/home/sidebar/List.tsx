@@ -47,7 +47,7 @@ const List = ({ data, userID, setPopUp, setCoordinate, children }: Props) => {
                                     <FaEllipsisH color='#a19f9a' />
                                 </button>
                                 <button
-                                    onClick={() => sidebarlistdispatch({ type: "ADD_PAGE", payload: { path: data.path.concat([data.id]) } })}
+                                    onClick={() => sidebarlistdispatch({ type: "ADD_PAGE", payload: { path: data.path.concat([data.id])} })}
                                     className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
                                     <FaPlus color='#a19f9a' />
                                 </button>

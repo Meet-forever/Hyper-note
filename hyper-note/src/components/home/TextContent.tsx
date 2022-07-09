@@ -8,11 +8,17 @@ const TextContent = () => {
     const handleHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
         const heading = e.target.value
         prefDispatch({ type: "UPDATE_SIDEBAR", payload: { update: { heading: heading } } })
-        sidebardispatch({ type: 'UPDATE_CONTENT', payload: { id: prefstate.selected.id, update: { heading: heading }, path: prefstate.selected.path } })
+        sidebardispatch({ type: 'UPDATE_CONTENT', payload: { id: prefstate.selected.id, update: { heading: heading }}})
+        // wsc(`${e.target.scrollHeight}px`)
     }
     return (
-        <div className="mx-auto w-2/3 break-words">
-            <input className="font-black text-5xl outline-none w-full" placeholder='Untitled' type="text" onChange={handleHeading} value={prefstate.selected.heading} />
+        <div className="mx-auto w-2/3">
+            
+            {/* <textarea placeholder='Untitled' onChange={handleHeading} value={prefstate.selected.heading} className="w-full resize-none font-black text-4xl outline-none" style={{height: sc}} /> */}
+            {/* {state?<div>{prefstate.selected.heading}</div>:<div>Untitled</div>} */}
+            {/* <input className="font-black flex flex-wrap break-words w-full  whitespace-pre-wrap text-5xl outline-none" placeholder='Untitled' type="text" onChange={handleHeading} value={prefstate.selected.heading} /> */}
+            <input className="font-black flex flex-wrap break-words w-full  whitespace-pre-wrap text-5xl outline-none" placeholder='Untitled' type="text" onChange={handleHeading} value={prefstate.selected.heading} />
+            {/* <textarea ref={`somethign`}></textarea> */}
             <br />
             <Text />      
             <br />

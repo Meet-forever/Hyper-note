@@ -17,10 +17,10 @@ const parser = (ar: any[]) => {
     return ar.map(i => {
         switch (i.type) {
             case 'h1': {
-                return [<h1 contentEditable="true" onClick={() => console.log(window.getSelection())} onBeforeInput={(e) => e.preventDefault()} onKeyDown={(e) => console.log(e.key)} className='outline-none text-4xl break-words whitespace-pre-wrap'>{i.content}</h1>, i.id]
+                return [<h1  onClick={() => console.log(window.getSelection())} onBeforeInput={(e) => e.preventDefault()} onKeyDown={(e) => console.log(e.key)} className='outline-none text-4xl break-words whitespace-pre-wrap'>{i.content}</h1>, i.id]
             }
             case 'h2': {
-                return [<h2 contentEditable="true" onClick={() => console.log(`I got selected: ${i.id}`)} onBeforeInput={(e) => e.preventDefault()} onKeyDown={(e) => console.log(e.key)} className='outline-none'>{i.content}</h2>, i.id]
+                return [<h2  onClick={() => console.log(`I got selected: ${i.id}`)} onBeforeInput={(e) => e.preventDefault()} onKeyDown={(e) => console.log(e.key)} className='outline-none'>{i.content}</h2>, i.id]
             }
             default: return
         }
