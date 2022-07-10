@@ -11,13 +11,14 @@ const SidebarList = () => {
     const [prefstate, prefdispatch] = multiReducer.preference
     const [popUp, setPopUp] = useState(false);
     const [coordinate, setCoordinate] = useState({ x: 0, y: 0 })
-    const userID = useRef([]);
+    const userID = useRef("");
     const handleDelete = () => {
-        if (userID.current == []) return;
-        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0] } })
-        if (prefstate.selected && prefstate.selected.id === userID.current[0]) {
+        if (!userID.current) return;
+        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current } })
+        if (prefstate.selected && prefstate.selected.id === userID.current) {
             prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: {} } })
         }
+        userID.current = ""
         setPopUp(false)
     }
 
@@ -30,7 +31,8 @@ const SidebarList = () => {
                 userID={userID}
                 data={data}
             >
-                {data.children === [] ? <></> : <>{narray(data.children)}</>}
+                {<>{narray(data.children)}</>}
+                {/* {!data.children? <></> : <>{narray(data.children)}</>} */}
             </List>
         )
     }
