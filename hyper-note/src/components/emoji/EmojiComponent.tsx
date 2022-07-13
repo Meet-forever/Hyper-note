@@ -10,7 +10,7 @@ const EmojiComponent = () => {
     const [selectedState, prefdispatch] = multiReducer.preference
 
     const handleEmoji = (e: React.MouseEvent<Element, MouseEvent>, emojiObj: IEmojiData) => {
-        sidebardispatch({ type: 'UPDATE_CONTENT', payload: {id: selectedState.selected.id, update: {emoji: emojiObj.emoji}, path: selectedState.selected.path} })
+        sidebardispatch({ type: 'UPDATE_CONTENT', payload: {id: selectedState.selected.id, update: {icon: emojiObj.emoji}, path: selectedState.selected.path} })
         prefdispatch({type: "UPDATE_SIDEBAR", payload: {update: {icon: emojiObj.emoji}}})
     }
     return (

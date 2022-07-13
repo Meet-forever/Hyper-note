@@ -56,15 +56,15 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
             const { id, update, path } = payload
             if (!id || !update || !path) return state
             const temp = [...path].reverse()
-            const updateIcon = (arrobj: SidebarList[]): SidebarList[] => {
-                const val = (temp.length == 0) ? "" : temp.pop()
+            const updateContent = (arrobj: SidebarList[]): SidebarList[] => {
+                const val = (temp.length === 0) ? "" : temp.pop()
                 if (val === "") {
                     return arrobj.map((data) => (data.id === id) ? { ...data, ...update } : data)
                 } else {
-                    return arrobj.map((data) => (data.id === val) ? { ...data, children: updateIcon(data.children) } : data)
+                    return arrobj.map((data) => (data.id === val) ? { ...data, children: updateContent(data.children) } : data)
                 }
             }
-            return updateIcon(state)
+            return updateContent(state)
         }
         default: return state
     }
