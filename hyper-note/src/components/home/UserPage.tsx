@@ -20,14 +20,12 @@ const UserPage = () => {
                 <CoverImage />
                 <span className="relative -top-10 left-20" >
                     {state.selected.icon !== '' ?
-                        <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-6xl relative z-10'>{state.selected.icon}</button>
+                        <button type="button" title="Edit Icon" onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-6xl relative z-10'>{state.selected.icon}</button>
                         :
-                        <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)}>
-                            <abbr title='Add icon'>
+                        <button type="button" title="Add Icon" onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)}>
                                 <div className="opacity-0 hover:opacity-30 rounded-md relative z-10 w-12 h-14 hover:bg-gray-200 flex justify-center items-center">
                                     <FaPlus color="gray" />
                                 </div>
-                            </abbr>
                         </button>}
                     {isEmojiPackOn ?
                         <ModalCover coordinatePos={coordinate} handleClick={setEmojiPack}>

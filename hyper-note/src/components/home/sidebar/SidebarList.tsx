@@ -21,7 +21,7 @@ const SidebarList = () => {
         setPopUp(false)
     }
 
-    const narray = (userlist: SidebarList[]) => userlist.map((data, index) => {
+    const narray = (userlist: SidebarList[], padding: number) => userlist.map((data, index) => {
         return (
             <List
                 key={data.id}
@@ -29,15 +29,16 @@ const SidebarList = () => {
                 setCoordinate={setCoordinate}
                 userID={userID}
                 data = {data}
+                padding = {padding}
                  >
-                {data.children === [] ? <></> : <>{narray(data.children)}</>}
+                {data.children === [] ? <></> : <>{narray(data.children, padding+1)}</>}
             </List>
         )
     }
     )
     return (
-        <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly overflow-auto px-3'>
-            {narray(sidebarlistState)}
+        <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly pl-2'>
+            {narray(sidebarlistState, 1)}
             {
                 popUp ?
                     <ModalCover coordinatePos={coordinate} handleClick={setPopUp} >

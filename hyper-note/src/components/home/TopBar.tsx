@@ -16,11 +16,11 @@ const TopBar = () => {
             <div className="flex justify-start items-center gap-x-2 w-[50%] overflow-x-auto hidescroll">
                 {!state.sidebar && <button onClick={() => prefdispatch({ type: "CHANGE_SIDEBAR" })}><FaBars color="#a19f9a" /></button>}
                 {state.selected.icon !== '' ?
-                    <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className="text-sm">
+                    <button type="button" title='Edit Icon' onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className="text-sm">
                         {state.selected.icon}
                     </button>
                     :
-                    <button onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-sm opacity-0 hover:opacity-20'><FaPlus color="#a19f9a" /></button>}
+                    <button type="button" title='Edit Icon' onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-sm opacity-0 hover:opacity-20'><FaPlus color="#a19f9a" /></button>}
                 {isEmojiPackOn ?
                     <ModalCover coordinatePos={coordinate} handleClick={setEmojiPack}>
                         <EmojiComponent />
@@ -28,8 +28,8 @@ const TopBar = () => {
                 <h1 className='overflow-hidden whitespace-nowrap text-ellipsis text-sm text-[#a19f9a]'>{state.selected.heading}</h1>
             </div>
             <div className="flex justify-center items-center gap-x-4">
-                <button><FiShare color="#a19f9a" /></button>
-                <button><FaCog color="#a19f9a" /></button>
+                <button type='button' title="Share"><FiShare color="#a19f9a" /></button>
+                <button type='button' title="Settings"><FaCog color="#a19f9a" /></button>
             </div>
         </div>
     )
