@@ -1,44 +1,65 @@
 import React, { useRef, useState } from 'react'
-import { FaTrash, FaStar} from "react-icons/fa"
+import { FaTrash, FaStar } from "react-icons/fa"
 import ModalCover from '../../modal/ModalCover';
 import List from './List';
 import { getMultiContext } from '../../../state_manager';
 import { SidebarList } from '../../../state_manager/sidebarList';
 
 const SidebarList = () => {
-    const {multiReducer} = getMultiContext()
+    const { multiReducer } = getMultiContext()
     const [sidebarlistState, sidebarlistDispatch] = multiReducer.sidebarList
     const [prefstate, prefdispatch] = multiReducer.preference
     const [popUp, setPopUp] = useState(false);
+    const [lastEdited, setLastEdited] = useState("")
     const [coordinate, setCoordinate] = useState({ x: 0, y: 0 })
-    const userID = useRef([]);
+    const userID = useRef([]), dragPicked = useRef({ id: "", path: [] }), dragTarget = useRef({ id: "", path: [] }), dragPosition = useRef("");
+
     const handleDelete = () => {
         if (userID.current == []) return;
-        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1]} })
-        if(prefstate.selected && prefstate.selected.id === userID.current[0]){
-            prefdispatch({type: "SET_CURRENT_PAGE", payload: {select: {}} })
+        sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1] } })
+        if (prefstate.selected && prefstate.selected.id === userID.current[0]) {
+            prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: {} } })
         }
         setPopUp(false)
     }
 
-    const narray = (userlist: SidebarList[], padding: number) => userlist.map((data, index) => {
+    const handleDragEnd = () => {
+        if (!dragPicked.current.id || !dragTarget.current.id || dragPicked.current.id === dragTarget.current.id) {
+            dragPicked.current = { id: "", path: [] }
+            dragTarget.current = { id: "", path: [] }
+            dragPosition.current = ""
+            return
+        }
+        sidebarlistDispatch({ type: "MOVE_CONTENT", payload: { current: dragPicked.current, target: dragTarget.current, position: dragPosition.current } })
+        dragPicked.current = { id: "", path: [] }
+        dragTarget.current = { id: "", path: [] }
+        dragPosition.current = ""
+    }
+
+    const narray = (userlist: SidebarList[], padding: number) => userlist.map((data) => {
         return (
             <List
                 key={data.id}
                 setPopUp={setPopUp}
                 setCoordinate={setCoordinate}
                 userID={userID}
-                data = {data}
-                padding = {padding}
-                 >
-                {data.children === [] ? <></> : <>{narray(data.children, padding+1)}</>}
+                data={data}
+                padding={padding}
+                dragPicked={dragPicked}
+                dragTarget={dragTarget}
+                dragPosition={dragPosition}
+                setLastEdited = {setLastEdited}
+            >
+                {data.children === [] ? <></> : <>{narray(data.children, padding + 1)}</>}
             </List>
         )
     }
     )
     return (
         <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly pl-2'>
-            {narray(sidebarlistState, 1)}
+            <div onDragEnd={handleDragEnd} className='w-full'>
+                {narray(sidebarlistState, 1)}
+            </div>
             {
                 popUp ?
                     <ModalCover coordinatePos={coordinate} handleClick={setPopUp} >
@@ -54,7 +75,7 @@ const SidebarList = () => {
                                     <div>Favorite</div>
                                     <FaStar color="gray" />
                                 </button>
-                                <div className='p-2 pb-0 text-xs'>Last edited: </div>
+                                <div className='p-2 pb-0 text-xs'>Last edited: {lastEdited} </div>
                             </div>
                         </div>
                     </ModalCover>
