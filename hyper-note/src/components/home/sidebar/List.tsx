@@ -24,10 +24,11 @@ type Props = {
         path: string[];
     }>,
     dragPosition: React.MutableRefObject<string>,
-    setLastEdited: React.Dispatch<React.SetStateAction<string>>
+    setLastEdited: React.Dispatch<React.SetStateAction<string>>,
+    dragStart: boolean
 }
 
-const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPicked, dragTarget, dragPosition, setLastEdited }: Props) => {
+const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPicked, dragTarget, dragPosition, setLastEdited, dragStart }: Props) => {
     const { multiReducer } = getMultiContext()
     const [prefstate, prefdispatch] = multiReducer.preference
     const [_, sidebarlistdispatch] = multiReducer.sidebarList
@@ -37,7 +38,7 @@ const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPi
     }
     const [toggle, setToggle] = useState(false)
     const [isHover, setHover] = useState(false)
-    const [placeHere, setPlaceHere] = useState(false)
+    const [placeHere, setPlaceHere] = useState(dragStart)
     const curdiv = useRef<HTMLDivElement>(null)
 
     const handleDragEnter = () => {
@@ -61,13 +62,12 @@ const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPi
             onDragOver={handleDragOver}
             onDragEnter={handleDragEnter}
             onDragLeave={() => setPlaceHere(false)}
-            onDragEndCapture={() => setPlaceHere(false)}
         >
             <div className={`flex flex-col w-full`}>
                 <div
                     className={`cursor-pointer gap-x-[0.1rem] flex justify-start 
                 items-center w-full font-semibold text-sm text-[#a19f9a]  
-                py-[0.2rem] ${data.id === prefstate.selected.id ? "bg-gray-200" : ""}
+                py-[0.3rem] ${data.id === prefstate.selected.id ? "bg-gray-200" : ""}
                  hover:bg-gray-200 rounded-sm pr-2 `}
                     style={{ paddingLeft: `${padding - 0.5}rem` }}
                     onMouseEnter={() => setHover(true)}
@@ -104,48 +104,14 @@ const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPi
                         </button>
                     </div> : null}
                 </div>
-                {toggle ? children : null}
-                {(!toggle && placeHere) ? <div className={`w-full bg-blue-200 h-1`}></div> : null}
+                {toggle ? 
+                    <>
+                    {(placeHere && dragStart)?<div className='h-1 bg-blue-200 w-full'></div>:null}
+                    {children}</> : null}
+                {(!toggle && placeHere && dragStart) ? <div className={`w-full bg-blue-200 h-1`}></div> : null}
             </div>
         </div>
     )
 }
 
 export default List
-
-
-    // <div className='w-[12rem] sm:w-[12rem]'>
-    //     <div className={`w-full justify-between items-center px-1 flex`}>
-    //         <details className={`text-[#a19f9a] text-sm w-full `}  >
-    //             <summary className={`pl-2 py-[0.2rem] w-full font-semibold ${data.id === prefstate.selected.ptr ? "bg-gray-200" : ""} hover:bg-gray-200 `}>
-    //                 <div className='inline-flex justify-between w-[88%] sm:w-[91%] '>
-    //                     <span className='flex gap-x-2 w-3/4'>
-    //                         <button className='text-[0.8rem]'> {data.icon !== '' ? data.icon : "📄"} </button>
-    //                         <button className='  whitespace-nowrap text-ellipsis overflow-hidden w-full text-left'
-    //                             onClick={handleCurrentPage} >
-    //                             {data.heading ? data.heading : "Untitled"}
-    //                         </button>
-    //                     </span>
-    //                     <div className="flex items-center justify-center w-1/4">
-    //                         <button
-    //                             onClick={(e) => {
-    //                                 userID.current = [data.id, data.path]
-    //                                 handleModalClick(e, setPopUp, setCoordinate)
-    //                             }}
-    //                             className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
-    //                             <FaEllipsisH color='#a19f9a' />
-    //                         </button>
-    //                         <button
-    //                             onClick={() => sidebarlistdispatch({ type: "ADD_PAGE", payload: { path: data.path.concat([data.id]) } })}
-    //                             className="text-xs p-1 rounded-sm cursor-pointer hover:bg-gray-300">
-    //                             <FaPlus color='#a19f9a' />
-    //                         </button>
-    //                     </div>
-    //                 </div>
-    //             </summary>
-    //             <div className="pl-1">
-    //                 {children}
-    //             </div>
-    //         </details>
-    //     </div>
-    // </div>

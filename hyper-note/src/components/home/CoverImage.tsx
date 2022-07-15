@@ -13,7 +13,7 @@ const CoverImage = () => {
                 {state.selected.cover !== "" ? <Image className='absolute' src={state.selected.cover} alt="pattern" layout='fill' objectFit='cover' /> : <></>}
                 <div className='flex h-full relative z-10 w-full justify-end items-end parentbox'>
                     <div className='childbox relative z-10 right-[20%] bottom-4 '>
-                        <button onClick={() => setCover(i => !i)} className='text-xs hover:bg-gray-100 rounded-sm font-sans text-gray-700 bg-gray-50 p-1 '>Change Cover</button>
+                        <button type="button" title='Change Cover' onClick={() => setCover(i => !i)} className='text-xs hover:bg-gray-100 rounded-sm font-sans text-gray-700 bg-gray-50 p-1 '>Change Cover</button>
                     </div>
                 </div>
                 {isCover ?

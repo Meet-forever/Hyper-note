@@ -20,7 +20,7 @@ const TopBar = () => {
                         {state.selected.icon}
                     </button>
                     :
-                    <button type="button" title='Edit Icon' onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-sm opacity-0 hover:opacity-20'><FaPlus color="#a19f9a" /></button>}
+                    <button type="button" title='Add Icon' onClick={(e) => handleModalClick(e, setEmojiPack, setcoordinate)} className='text-sm opacity-0 hover:opacity-20'><FaPlus color="#a19f9a" /></button>}
                 {isEmojiPackOn ?
                     <ModalCover coordinatePos={coordinate} handleClick={setEmojiPack}>
                         <EmojiComponent />

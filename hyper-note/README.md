@@ -24,6 +24,9 @@ Future Goals:
     - [x] Deleting List and Page
     - [x] Updating and Page 
 - [x] Dynamic Cover Image Selection
+- [ ] Drag and Drop for sidebar
+    - [x] Bottom
+    - [ ] Below Toggle
 - [ ] Caching
     - [ ] Deque and LRU
 - [ ] Dark mode

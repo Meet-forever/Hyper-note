@@ -13,7 +13,7 @@ const SidebarList = () => {
     const [lastEdited, setLastEdited] = useState("")
     const [coordinate, setCoordinate] = useState({ x: 0, y: 0 })
     const userID = useRef([]), dragPicked = useRef({ id: "", path: [] }), dragTarget = useRef({ id: "", path: [] }), dragPosition = useRef("");
-
+    const [dragStart, setDragStart] = useState(false)
     const handleDelete = () => {
         if (userID.current == []) return;
         sidebarlistDispatch({ type: "DELETE_LIST", payload: { id: userID.current[0], path: userID.current[1] } })
@@ -24,6 +24,7 @@ const SidebarList = () => {
     }
 
     const handleDragEnd = () => {
+        setDragStart(false)
         if (!dragPicked.current.id || !dragTarget.current.id || dragPicked.current.id === dragTarget.current.id) {
             dragPicked.current = { id: "", path: [] }
             dragTarget.current = { id: "", path: [] }
@@ -49,6 +50,7 @@ const SidebarList = () => {
                 dragTarget={dragTarget}
                 dragPosition={dragPosition}
                 setLastEdited = {setLastEdited}
+                dragStart={dragStart}
             >
                 {data.children === [] ? <></> : <>{narray(data.children, padding + 1)}</>}
             </List>
@@ -57,7 +59,7 @@ const SidebarList = () => {
     )
     return (
         <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly pl-2'>
-            <div onDragEnd={handleDragEnd} className='w-full'>
+            <div onDragEnd={handleDragEnd} onDragStart={()=> setDragStart(true)} className='w-full'>
                 {narray(sidebarlistState, 1)}
             </div>
             {

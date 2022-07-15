@@ -17,7 +17,7 @@ const parser = (ar: any[]) => {
     return ar.map(i => {
         switch (i.type) {
             case 'h1': {
-                return [<h1 suppressContentEditableWarning contentEditable="true" onClick={() => console.log(window.getSelection())} onBeforeInput={(e) => e.preventDefault()} onKeyDown={(e) => console.log(e.key)} className='outline-none text-4xl break-words whitespace-pre-wrap'>{i.content}</h1>, i.id]
+                return [<h1 suppressContentEditableWarning contentEditable="true" onClick={() => console.log(window.getSelection())} onBeforeInput={(e) => {e.preventDefault(); console.log()}} onKeyDown={(e) => console.log(e.key)} className='outline-none text-4xl break-words whitespace-pre-wrap'>{i.content}</h1>, i.id]
             }
             case 'h2': {
                 return [<h2 suppressContentEditableWarning contentEditable="true" onClick={() => console.log(`I got selected: ${i.id}`)} onBeforeInput={(e) => e.preventDefault()} onKeyDown={(e) => console.log(e.key)} className='outline-none'>{i.content}</h2>, i.id]
@@ -52,8 +52,8 @@ const Text = () => {
                     onDragEnd={handleDragEvent}
                     className='flex justify-start items-center parentbox relative -left-12 p-2'
                     key={k} >
-                    <div className='text-[0.98rem] p-1 childbox'> <FaPlus color="gray" /> </div>
-                    <div className='cursor-move text-[0.98rem] p-1 childbox bg-gray-50 rounded-sm'><FaGripVertical color="gray" /></div>
+                    <div className='text-[0.98rem] p-1 childbox'> <FaPlus size="0.9em" color="gray" /> </div>
+                    <div className='cursor-move text-[0.98rem] p-1 childbox bg-gray-50 rounded-sm'><FaGripVertical size="0.9em" color="gray" /></div>
                     {i[0]}
                 </div>
                     :

@@ -77,7 +77,7 @@ export default NextAuth({
             credentials: {},
             async authorize(credentials, req) {
                 const dev = process.env.NODE_ENV != "production"
-                const url = dev ? "http://localhost:3000" : ""
+                const url = dev ? "http://localhost:3000" : process.env.NEXTAUTH_URL
                 const res: any = await fetch(`${url}/api/login`, {
                     method: 'POST',
                     body: JSON.stringify(credentials),

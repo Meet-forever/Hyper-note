@@ -90,7 +90,6 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
                         const target2 = (target_path.length !== 0) ? target_path.pop() : "";
                         if (target2 === "") {
                             const target_index = arrobj2.findIndex(data => data.id === id2)
-                            console.log(target_index)
                             const arePathsEqual = isEqual(arrobj2[target_index].path, arrobj[current_index].path)
                             if (position === "down" && (target_id + 1 === current_index && arePathsEqual)) {
                                 console.log("state stays the same")
@@ -101,7 +100,6 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
                             }
                             else if (position === "down") {
                                 let popped_element = arrobj.splice(current_index, 1)[0]
-                                // console.log(arrobj2[target_index].path)
                                 popped_element = { ...popped_element, path: [...arrobj2[target_index].path]}
                                 arrobj2.splice(target_index+1, 0, popped_element)
                             }
