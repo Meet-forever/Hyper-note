@@ -26,7 +26,6 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
                 const val = (temp.length == 0) ? "" : temp.shift();
                 if (val === "") {
                     const id = v4()
-                    console.log(path)
                     const defaultlist = { id: id, heading: "Untitled", icon: '', cover: '', path: path, children: [], lastedited: new Date().toLocaleString() }
                     return position ? [defaultlist, ...arrobj] : [...arrobj, defaultlist]
                 }
@@ -76,7 +75,7 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
             const { id: target_id, path: target_path } = target
             // if(position === "down"){
 
-            console.log(`Current: ${JSON.stringify(current)} Target: ${JSON.stringify(target)} Position: ${position}`)
+            // console.log(`Current: ${JSON.stringify(current)} Target: ${JSON.stringify(target)} Position: ${position}`)
             current_path.reverse()
             target_path.reverse()
 
@@ -84,7 +83,7 @@ export const sideBarListReducerFunction = (state: SidebarList[], action: any) =>
                 const target = (current_path.length !== 0) ? current_path.pop() : "";
                 if (target === "") {
                     const current_index = arrobj.findIndex(data => data.id === id)
-                    console.log(arrobj[current_index])
+                    // console.log(arrobj[current_index])
                     // console.log(target_path)
                     const filterobj2 = (arrobj2: SidebarList[], id2: string) => {
                         const target2 = (target_path.length !== 0) ? target_path.pop() : "";
