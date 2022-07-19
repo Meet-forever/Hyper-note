@@ -4,11 +4,15 @@ import { NextPage } from 'next'
 import NavBar1 from '../../components/navbar/NavBar1'
 import LoginForm from '../../components/login/LoginForm'
 import { getSession } from "next-auth/react"
+import Head from 'next/head'
 
 const Login: NextPage = () => {
-  
+
   return (
     <div>
+      <Head>
+        <title>Login</title>
+      </Head>
       <NavBar1 />
       <div className="w-full h-screen flex items-center justify-center p-8">
         <div className="w-full h-screen absolute">
@@ -23,13 +27,13 @@ const Login: NextPage = () => {
 export default Login
 
 
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps(context: any) {
   const session = await getSession(context);
-  if(session) return {
+  if (session) return {
     redirect: {
       destination: "/home",
-      permanent: false 
+      permanent: false
     }
   }
-  return {props:{}}
+  return { props: {} }
 }

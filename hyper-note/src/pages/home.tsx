@@ -8,6 +8,7 @@ import { preferenceReducerFunction, initialPreference } from '../state_manager/p
 import { getinitialSidebarList, sideBarListReducerFunction } from '../state_manager/sidebarList'
 import axios from "axios"
 import { getToken } from 'next-auth/jwt'
+import Head from 'next/head'
 const home = ({ token, userlist, theme_images }: { token: any, userlist: any, theme_images: string[] }) => {
     const preference = useReducer(preferenceReducerFunction, { ...initialPreference, theme_images: theme_images })
     const sidebarList = useReducer(sideBarListReducerFunction, getinitialSidebarList(userlist.notes))
@@ -30,6 +31,9 @@ const home = ({ token, userlist, theme_images }: { token: any, userlist: any, th
     return (
         (!data && status === "loading") ? <><Loading /></> :
             <MultiContextProvider value={{ multiReducer: multireducers }}>
+                <Head>
+                    <title>Home</title>
+                </Head>
                 <div className='flex'>
                     <Sidebar />
                     <div className='h-screen overflow-y-auto w-full'>
