@@ -18,12 +18,12 @@ const TextContent = () => {
         data: [{
             id: 'a',
             tag: 'h1',
-            content: 'this works'
+            content: 'This works'
         },
         {
             id: 'b',
             tag: 'p',
-            content: 'this also works'
+            content: 'This also works'
         }]
     }
     const [contentState, setContentState] = useState(content)
