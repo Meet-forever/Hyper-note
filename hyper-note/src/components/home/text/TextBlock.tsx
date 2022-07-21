@@ -17,10 +17,11 @@ const TextBlock = ({ data, currentFocusedElement, setContentState, setCurrentFoc
     React.useEffect(() => {
         if (localElement.current && localElement.current.innerText !== data.content) {
             localElement.current.innerText = data.content
-            if (currentFocusedElement === data.id) localElement.current.focus()
         }
-    }, [data])
+        if (currentFocusedElement === data.id) localElement.current?.focus()
+    }, [data, currentFocusedElement])
 
+    // When localElement(contentEditable div) gets updated, we will update localState to update the change in the global state
     React.useEffect(() => {
         const onInput = (event: Event) => {
             const target = event.target as HTMLElement
@@ -32,32 +33,43 @@ const TextBlock = ({ data, currentFocusedElement, setContentState, setCurrentFoc
         }
     }, [localElement])
 
+    // updates global state
     useEffect(() => {
-        let update: NodeJS.Timeout
-        update = setTimeout(() => {
-            setContentState(i => {
-                const index = i.findIndex(obj => obj.id === data.id)
-                if (index === -1) return i
-                i[index] = {
-                    ...i[index],
-                    ...localState
-                }
-                return [...i]
-            })
-        }, 2000)
-        return () => {
-            clearTimeout(update)
-        }
+        setContentState(i => {
+            const index = i.findIndex(obj => obj.id === data.id)
+            if (index === -1) return i
+            i[index] = {
+                ...i[index],
+                ...localState
+            }
+            return [...i]
+        })
     }, [localState])
 
 
     const addTextBlock = (id: string) => {
         const newid = v4()
         const defaultblock = { id: newid, tag: 'p', content: 'Enter something' }
+        const selection = window.getSelection()
         setContentState(i => {
             const index = i.findIndex(obj => obj.id === id)
-            if (index === -1) return i
+            if (index === -1 || !selection) return i
+            let _newContent = ""
+            if (selection.anchorOffset === selection.focusOffset) {
+                _newContent = i[index].content.substr(selection.anchorOffset, i[index].content.length)
+                i[index].content = i[index].content.slice(0, selection.anchorOffset)
+                // console.log(`Move Caret: ${_newContent}`)
+                // console.log(i[index])
+            }
+            else {
+                // console.log(`Move: ${i[index].content.slice(selection.focusOffset, i[index].content.length)}`)
+                _newContent = i[index].content.slice(selection.focusOffset, i[index].content.length)
+                // console.log(`Stay: ${i[index].content.slice(0, selection.anchorOffset)}`)
+                i[index].content = i[index].content.slice(0, selection.anchorOffset)
+            }
+
             const newState = [...i]
+            defaultblock.content = _newContent
             newState.splice(index + 1, 0, defaultblock)
             setCurrentFocusedElement(newid)
             return newState
@@ -66,12 +78,16 @@ const TextBlock = ({ data, currentFocusedElement, setContentState, setCurrentFoc
     const deleteTextBlock = (id: string) => {
         setContentState(i => {
             const index = i.findIndex(obj => obj.id === id)
-            if (index === -1 || i.length === 1) return i
+            if (index === -1 || i.length < 2) return i
             const newState = [...i]
             newState.splice(index, 1)
             let target = index
-            if(index-1 === newState.length-1) target -= 1;
+            if (index - 1 === newState.length - 1) {
+                target -= 1;
+                // console.log(newState[target])
+            }
             setCurrentFocusedElement(newState[target].id)
+
             return newState
         })
     }

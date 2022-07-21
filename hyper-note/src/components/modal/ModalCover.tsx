@@ -13,8 +13,8 @@ const ModalCover = ({ handleClick, children, coordinatePos }: Props) => {
     if  (!coordinatePos.x || !coordinatePos.y) return (<></>)
     return (
         <div>
-            <div className='fixed z-20 top-0 left-0 w-full h-screen' onClick={() => handleClick(false)}> </div>
-            <div className='fixed z-30 to' style={{top: coordinatePos.y, left: coordinatePos.x}} >
+            <div className='fixed z-30 top-0 left-0 w-full h-screen' onClick={() => handleClick(false)}> </div>
+            <div className='fixed z-40 to' style={{top: coordinatePos.y, left: coordinatePos.x}} >
                 {children}
             </div>
         </div>

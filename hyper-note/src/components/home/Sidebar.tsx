@@ -9,7 +9,7 @@ const Sidebar = () => {
     const [prefstate] = multiReducer.preference
     const [_, sidebarlistDispatch] = multiReducer.sidebarList
     return (
-        <div className={!prefstate.sidebar ? `hidden ` : ` bg-white absolute z-20 h-screen sm:static w-52 sm:w-72 overflow-hidden flex flex-col`}>
+        <div className={!prefstate.sidebar ? `hidden ` : ` bg-white absolute z-30 h-screen sm:static w-52 sm:w-72 overflow-hidden flex flex-col`}>
             <UserBox />
             <SidebarList />
             <div className='h-[6%] bg-[#f7f6f3] w-full'>

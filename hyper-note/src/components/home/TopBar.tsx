@@ -12,7 +12,7 @@ const TopBar = () => {
     const [isEmojiPackOn, setEmojiPack] = useState(false)
     const [coordinate, setcoordinate] = useState({ x: 0, y: 0 })
     return (
-        <div className={`${state.sidebar ? 'px-20' : 'px-14'} flex justify-between bg-white w-full items-center py-1 text-lg text-gray-600`}>
+        <div className={`${state.sidebar ? 'px-20' : 'px-14'} sticky top-0 z-20 flex justify-between bg-white w-full items-center py-1 text-lg text-gray-600`}>
             <div className="flex justify-start items-center gap-x-2 w-[50%] overflow-x-auto hidescroll">
                 {!state.sidebar && <button onClick={() => prefdispatch({ type: "CHANGE_SIDEBAR" })}><FaBars color="#a19f9a" /></button>}
                 {state.selected.icon !== '' ?
