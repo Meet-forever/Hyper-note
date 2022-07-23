@@ -8,14 +8,6 @@ interface Props {
         edit: boolean;
         position: number;
     }>>,
-    previousKeyAndContent: {
-        key: string;
-        content: string;
-    }
-    setPreviousKeyAndContent: React.Dispatch<React.SetStateAction<{
-        key: string;
-        content: string;
-    }>>,
     position_index: number;
     setContentState: React.Dispatch<React.SetStateAction<any[]>>,
     setCurrentFocusedElement: React.Dispatch<React.SetStateAction<string>>,
@@ -24,8 +16,6 @@ interface Props {
 
 const TextBlock = ({ data,
     currentFocusedElement,
-    previousKeyAndContent: previousKey,
-    setPreviousKeyAndContent: setPreviousKey,
     setCaretPosition,
     setContentState,
     setCurrentFocusedElement,
@@ -55,7 +45,7 @@ const TextBlock = ({ data,
 
     // updates global state
     useEffect(() => {
-        // const update_global = setTimeout(() => {
+        const update = setTimeout(() => {
             setContentState(i => {
                 const index = i.findIndex(obj => obj.id === data.id)
                 if (index === -1) return i
@@ -65,9 +55,9 @@ const TextBlock = ({ data,
                 }
                 return [...i]
             })
-        // }, 1000)
+        }, 1000)
         return () => {
-            // clearTimeout(update_global)
+            clearTimeout(update)
         }
     }, [localState])
 
@@ -77,23 +67,18 @@ const TextBlock = ({ data,
             const newid = v4()
             const defaultblock = { id: newid, tag: 'p', content: "" }
             let _newContent = ""
-            if (previousKey.key !== 'Enter') {
-                const selection = window.getSelection()
-                if (!selection) return i
-                if (selection.anchorOffset === selection.focusOffset) {
-                    _newContent = i[position_index].content.substr(selection.anchorOffset, i[position_index].content.length)
-                    i[position_index].content = i[position_index].content.slice(0, selection.anchorOffset)
-                    // console.log(`Move Caret: ${_newContent}`)
-                }
-                else {
-                    // console.log(`Move: ${i[index].content.slice(selection.focusOffset, i[index].content.length)}`)
-                    _newContent = i[position_index].content.slice(selection.focusOffset, i[position_index].content.length)
-                    // console.log(`Stay: ${i[index].content.slice(0, selection.anchorOffset)}`)
-                    i[position_index].content = i[position_index].content.slice(0, selection.anchorOffset)
-                }
-                setPreviousKey({ key: "Enter", content: _newContent })
+            const selection = window.getSelection()
+            if (!selection) return i
+            if (selection.anchorOffset === selection.focusOffset) {
+                _newContent = i[position_index].content.substr(selection.anchorOffset, i[position_index].content.length)
+                i[position_index].content = i[position_index].content.slice(0, selection.anchorOffset)
+                // console.log(`Move Caret: ${_newContent}`)
+            } else {
+                _newContent = i[position_index].content.slice(selection.focusOffset, i[position_index].content.length)
+                i[position_index].content = i[position_index].content.slice(0, selection.anchorOffset)
             }
             const newstate = [...i]
+            defaultblock.content = _newContent
             newstate.splice(position_index + 1, 0, defaultblock)
             setCurrentFocusedElement(newid)
             return newstate
@@ -128,23 +113,6 @@ const TextBlock = ({ data,
             return
         }
     }
-    const fillTextBlock = () => {
-        setContentState(i =>{
-            const newState = [...i]
-            newState[position_index] = {
-                ...newState[position_index],
-                content: previousKey.content
-            }
-            return newState
-        })
-    }
-
-    const onKeyUpHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "Enter") {
-            fillTextBlock()
-            setPreviousKey({ key: "", content: "" })
-        }
-    }
 
     const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
         setCurrentFocusedElement(data.id)
@@ -158,9 +126,7 @@ const TextBlock = ({ data,
                     contentEditable
                     suppressContentEditableWarning
                     ref={localElement}
-                    onChange={(e) => console.log(e.currentTarget.innerText)}
                     onKeyDown={onKeyDownHandler}
-                    onKeyUp={onKeyUpHandler}
                     onClick={onClickHandler}
                     data-position={data.id}
                     className={`text-4xl font-black outline-none ${data.content ? "" : "text-gray-100"}`}
@@ -173,17 +139,18 @@ const TextBlock = ({ data,
                     suppressContentEditableWarning
                     ref={localElement}
                     onKeyDown={onKeyDownHandler}
-                    onKeyUp={onKeyUpHandler}
                     onClick={onClickHandler}
                     data-position={data.id}
-                    className="text-base font-normal outline-none"
+                    className="text-base font-normal outline-none hover:bg-gray-100 w-full px-[0.4rem] py-[0.30rem]  rounded-sm"
                 >
                 </div>)
             }
         }
     }
-    return (<div>
-        {getElement()}
+    return (<div className='flex justify-start items-center parentbox relative -left-12'>
+        <div className='text-[0.98rem] p-1 childbox hover:bg-gray-50'> <FaPlus size="0.9em" color="gray" /> </div>
+        <div className='cursor-move text-[0.98rem] p-1 childbox hover:bg-gray-50 rounded-sm'><FaGripVertical size="0.9em" color="gray" /></div>
+        <>{getElement()}</>
     </div>)
 }
 

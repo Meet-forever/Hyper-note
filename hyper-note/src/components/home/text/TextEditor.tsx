@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 import { useState } from "react"
+import { FaGripVertical, FaPlus } from 'react-icons/fa'
 import { getMultiContext } from '../../../state_manager'
 import { Page } from '../../../state_manager/page'
 import TextBlock from './TextBlock'
@@ -11,8 +12,7 @@ const TextEditor = ({ page, currentPageId }: { page: Page, currentPageId: any })
     const [contentState, setContentState] = useState(page.data)
     const [caretPosition, setCaretPosition] = useState({ edit: false, position: 0 })
     const [currentFocusedElement, setCurrentFocusedElement] = useState<string>("")
-    const [previousKey, setPreviousKey] = useState({key: "", content: ""})
-    useEffect(()=>{
+    useEffect(() => {
         setContentState(page.data)
     }, [page])
     useEffect(() => {
@@ -31,12 +31,12 @@ const TextEditor = ({ page, currentPageId }: { page: Page, currentPageId: any })
             setCaretPosition({ edit: false, position: 0 })
         }
         let update: NodeJS.Timeout
-        if(contentState.length !== 0){
-            update = setTimeout(async() => {
+        if (contentState.length !== 0) {
+            update = setTimeout(async () => {
                 const session = await getSession()
                 await axios.post("/api/updatepage", {
                     ptr: currentPageId,
-                    notes: {lastupdate: new Date().toLocaleString(), data: contentState},
+                    notes: { lastupdate: new Date().toLocaleString(), data: contentState },
                     provider: session?.provider
                 })
             }, 3000)
@@ -45,20 +45,19 @@ const TextEditor = ({ page, currentPageId }: { page: Page, currentPageId: any })
             clearTimeout(update)
         }
     }, [contentState])
-
     const dataToElementMapper = (objectArray: any[]) => {
         return (objectArray.map((data, index) => {
-            return (<TextBlock
-                key={index}
-                data={data}
-                position_index={index}
-                previousKeyAndContent = {previousKey}
-                setPreviousKeyAndContent = {setPreviousKey}
-                currentFocusedElement={currentFocusedElement}
-                setContentState={setContentState}
-                setCaretPosition={setCaretPosition}
-                setCurrentFocusedElement={setCurrentFocusedElement}
-            />)
+            return (
+                <TextBlock
+                    key={index}
+                    data={data}
+                    position_index={index}
+                    currentFocusedElement={currentFocusedElement}
+                    setContentState={setContentState}
+                    setCaretPosition={setCaretPosition}
+                    setCurrentFocusedElement={setCurrentFocusedElement}
+                />
+            )
         }))
     }
 

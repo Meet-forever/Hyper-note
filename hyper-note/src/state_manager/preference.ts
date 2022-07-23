@@ -17,7 +17,7 @@ export const initialPreference: Preference = {
 
 export type PreferenceAction = {
     type: "CHANGE_THEME" | "SET_CURRENT_PAGE" | "CHANGE_SIDEBAR" | "UPDATE_SIDEBAR",
-    payload?: undefined | {color?: string, select?: SidebarList, update?: any}
+    payload?: undefined | {color?: string, select?: any, update?: any}
 }
 
 export const preferenceReducerFunction = (state:Preference, action: PreferenceAction): Preference => {
