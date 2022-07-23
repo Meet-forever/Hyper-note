@@ -3,7 +3,7 @@ import { FaCaretDown, FaCaretRight, FaEllipsisH, FaPlus } from 'react-icons/fa'
 import { handleModalClick } from '../../modal/modalHandler'
 import { getMultiContext } from '../../../state_manager'
 import { SidebarList } from '../../../state_manager/sidebarList'
-import { pagecache } from '../../../utils/pagecache'
+import pagecache from '../../../utils/pagecache'
 
 type Props = {
     data: SidebarList,
@@ -31,10 +31,12 @@ type Props = {
 const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPicked, dragTarget, dragPosition, setLastEdited, dragStart }: Props) => {
     const { multiReducer } = getMultiContext()
     const [prefstate, prefdispatch] = multiReducer.preference
-    const [_, sidebarlistdispatch] = multiReducer.sidebarList
+    const [__sidebarlist, sidebarlistdispatch] = multiReducer.sidebarList
+    const [__page, pageDispatch] = multiReducer.page
     const handleCurrentPage = async () => {
         prefdispatch({ type: "SET_CURRENT_PAGE", payload: { select: data } })
-        // const notes = await pagecache(data.id)
+        const notes = await pagecache(data.id)
+        pageDispatch({type: "SET_DOC", payload: { notes: notes}})
     }
     const [toggle, setToggle] = useState(false)
     const [isHover, setHover] = useState(false)

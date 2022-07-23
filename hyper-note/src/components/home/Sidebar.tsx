@@ -12,7 +12,7 @@ const Sidebar = () => {
         <div className={!prefstate.sidebar ? `hidden ` : ` bg-white absolute z-30 h-screen sm:static w-52 sm:w-72 overflow-hidden flex flex-col`}>
             <UserBox />
             <SidebarList />
-            <div className='h-[6%] bg-[#f7f6f3] w-full'>
+            <div className='h-[10vh] bg-[#f7f6f3] w-full'>
                 <div className='h-full w-full flex justify-end items-center flex-col'>
                     <button className="w-full" onClick={() => sidebarlistDispatch({ type: 'ADD_PAGE', payload: {path: [], position: false}})}>
                         <div className="flex justify-center text-[0.92rem] font-semibold text-[#a19f90] gap-x-3 items-center hover:bg-gray-200 w-full p-2 cursor-pointer">

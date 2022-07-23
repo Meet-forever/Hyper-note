@@ -58,7 +58,7 @@ const SidebarList = () => {
     }
     )
     return (
-        <div className='h-[74%] sm:h-[73%] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly pl-2'>
+        <div className='h-[70vh] bg-[#f7f6f3] flex flex-col items-start justify-start w-full hidescrolly pl-2'>
             <div onDragEnd={handleDragEnd} onDragStart={()=> setDragStart(true)} className='w-full'>
                 {narray(sidebarlistState, 1)}
             </div>

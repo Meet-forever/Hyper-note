@@ -9,7 +9,7 @@ const UserBox = () => {
     const {data} = useSession()
     const username = data?.user?.name ?? 'Guest'
     return (
-        <div className=' h-[20%] w-full text-[0.92rem] sm:h-[21%] bg-[#f7f6f3] overflow-y-auto hidescrollx py-2'>
+        <div className=' h-[20vh] w-full text-[0.92rem] bg-[#f7f6f3] overflow-y-auto hidescrollx py-2'>
             <div className="flex flex-col justify-center items-start ">
                 <div className="flex justify-between items-center px-4 w-full">
                     <div className='flex justify-center  items-center gap-x-3 font-semibold cursor-default text-[#a19f90] p-1'>

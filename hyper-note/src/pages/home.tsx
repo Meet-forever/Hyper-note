@@ -9,12 +9,15 @@ import { getinitialSidebarList, sideBarListReducerFunction } from '../state_mana
 import axios from "axios"
 import { getToken } from 'next-auth/jwt'
 import Head from 'next/head'
+import { initialPage, pageReducerFunction } from '../state_manager/page'
 const home = ({ token, userlist, theme_images }: { token: any, userlist: any, theme_images: string[] }) => {
     const preference = useReducer(preferenceReducerFunction, { ...initialPreference, theme_images: theme_images })
     const sidebarList = useReducer(sideBarListReducerFunction, getinitialSidebarList(userlist.notes))
+    const page = useReducer(pageReducerFunction, initialPage)
     const multireducers = {
         preference,
-        sidebarList
+        sidebarList,
+        page
     }
     axios.defaults.headers.common["Authorization"] = `Bearer ${token.accessToken}`
     const { status, data } = useSession();

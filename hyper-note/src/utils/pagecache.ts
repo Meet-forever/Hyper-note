@@ -2,7 +2,7 @@ import axios from "axios"
 import { getSession } from "next-auth/react"
 
 
-export const pagecache = async(file:string) => {
+const pagecache = async(file:string) => {
     const session = await getSession()
     const result = await axios.post("/api/getpage",{
         ptr: file,
@@ -10,3 +10,4 @@ export const pagecache = async(file:string) => {
     }).then(res => res.data)
     return result
 }
+export default pagecache

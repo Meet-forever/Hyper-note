@@ -1,32 +1,37 @@
-import { useReducer } from "react"
-
 export type Page = {
-    ptr: string,
-    heading: string,
-    icon: string,
-    cover: string,
-    path: string[],
-    notes: any[]
-} | {}
+    lastedited: string,
+    data: {
+        id: string,
+        tag: string,
+        content: string,
+        image?: string
+    }[]
+}
 
-export const initialPage:Page = {
-    ptr: '',
-    heading: '',
-    icon: '',
-    cover: '',
-    path: [],
-    notes: []
-} 
+export const initialPage: Page = {
+    lastedited: '',
+    data: []
+}
 
+export type PageAction = {
+    type: "SET_DOC" | "UPDATE_DOC" | "DELETE_DOC",
+    payload?: any
+}
 
-export const pageReducerFunction = (state:Page, action:any):Page => {
-    switch(action){
-        case "": {
+export const pageReducerFunction = (state: Page, action: PageAction): Page => {
+    const {type, payload} = action
+    switch (type) {
+        case "SET_DOC": {
+            const {notes} = payload
+            return {...notes.note}
+        }
+        case "UPDATE_DOC": {
+            return state
+        }
+        case "DELETE_DOC": {
             return state
         }
         default: state
     }
     return state
 }
-
-export const pageReducer = useReducer(pageReducerFunction, initialPage)

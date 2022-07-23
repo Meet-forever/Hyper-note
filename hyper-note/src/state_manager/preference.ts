@@ -1,4 +1,5 @@
 import { Page } from "./page"
+import { SidebarList } from "./sidebarList"
 
 export type Preference = {
     color_mode: string,
@@ -16,7 +17,7 @@ export const initialPreference: Preference = {
 
 export type PreferenceAction = {
     type: "CHANGE_THEME" | "SET_CURRENT_PAGE" | "CHANGE_SIDEBAR" | "UPDATE_SIDEBAR",
-    payload?: undefined | {color?: string, select?: Page, update?: any}
+    payload?: undefined | {color?: string, select?: SidebarList, update?: any}
 }
 
 export const preferenceReducerFunction = (state:Preference, action: PreferenceAction): Preference => {

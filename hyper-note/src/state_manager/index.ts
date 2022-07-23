@@ -1,6 +1,6 @@
-import { initialPreference, Preference, PreferenceAction } from "./preference"
-import { initialPage, pageReducer, Page } from "./page"
-import { createContext, useContext, useReducer, Dispatch } from "react"
+import { Preference, PreferenceAction } from "./preference"
+import { Page, PageAction } from "./page"
+import { createContext, useContext, Dispatch } from "react"
 import { SidebarList } from "./sidebarList";
 
 
@@ -8,7 +8,7 @@ import { SidebarList } from "./sidebarList";
 interface MultiContextType {
     multiReducer: {
         preference: [Preference, Dispatch<PreferenceAction>];
-        page?: [Page, Dispatch<any>];
+        page: [Page, Dispatch<PageAction>];
         sidebarList: [SidebarList[], React.Dispatch<any>];
     }
 }
