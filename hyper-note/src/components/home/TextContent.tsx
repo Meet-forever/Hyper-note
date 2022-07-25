@@ -17,7 +17,7 @@ const TextContent = () => {
     }
 
     return (
-        <div className="mx-auto w-2/3 break-words">
+        <div className="mx-auto w-2/3 break-words pb-12">
             <textarea className={`resize-none font-black text-5xl overflow-hidden outline-none w-full`} placeholder='Untitled' onChange={handleHeading} value={prefstate.selected.heading} />
             <TextEditor page={page} currentPageId={prefstate.selected.id} />
         </div>

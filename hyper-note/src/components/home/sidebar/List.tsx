@@ -80,9 +80,9 @@ const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPi
                     ref={curdiv}
                     draggable="true"
                 >
-                    <button type="button" title="Collapse or Expand" className='text-[1.1rem] rounded-sm hover:bg-gray-300' onClick={() => setToggle(i => !i)}>{toggle ? <FaCaretDown /> : <FaCaretRight />}</button>
-                    <div className='text-[0.8rem] p-[0.05rem]'>{data.icon}</div>
-                    <div onClick={handleCurrentPage} className='whitespace-nowrap text-ellipsis overflow-hidden w-full'>{data.heading}</div>
+                    <button type="button" title="Collapse or Expand" className='text-[1rem] p-[0.1rem] rounded-sm hover:bg-gray-300' onClick={() => setToggle(i => !i)}>{toggle ? <FaCaretDown /> : <FaCaretRight />}</button>
+                    <div className='text-[0.78rem] mx-1 p-[0.05rem]'>{data.icon}</div>
+                    <div onClick={handleCurrentPage} className='whitespace-nowrap text-ellipsis text-[0.9rem] overflow-hidden w-full'>{data.heading}</div>
                     {isHover ? <div className='flex'>
                         <button
                             type="button"
@@ -100,7 +100,7 @@ const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPi
                             type="button"
                             title='Add Page Inside'
                             onClick={() => sidebarlistdispatch({ type: "ADD_PAGE", payload: { path: data.path.concat([data.id]) } })}
-                            className='text-[0.7rem] p-1 rounded-ms hover:bg-gray-300'
+                            className='text-[0.7rem] p-1 rounded-sm hover:bg-gray-300'
                         >
                             <FaPlus />
                         </button>
@@ -116,4 +116,4 @@ const List = ({ data, userID, setPopUp, setCoordinate, children, padding, dragPi
     )
 }
 
-export default List
+export default React.memo(List)

@@ -5,18 +5,20 @@ export type Preference = {
     color_mode: string,
     selected: any,
     sidebar: boolean,
-    theme_images: string[]
+    theme_images: string[],
+    parent_scroll: boolean
 }
 
 export const initialPreference: Preference = {
     color_mode: "light",
     selected: {},
     sidebar: true,
-    theme_images: []
+    theme_images: [],
+    parent_scroll: true
 }
 
 export type PreferenceAction = {
-    type: "CHANGE_THEME" | "SET_CURRENT_PAGE" | "CHANGE_SIDEBAR" | "UPDATE_SIDEBAR",
+    type: "CHANGE_THEME" | "SET_CURRENT_PAGE" | "CHANGE_SIDEBAR" | "UPDATE_SIDEBAR" | "SCROLL_ON" | "SCROLL_OFF",
     payload?: undefined | {color?: string, select?: any, update?: any}
 }
 
@@ -48,6 +50,18 @@ export const preferenceReducerFunction = (state:Preference, action: PreferenceAc
                     ...state.selected,
                     ...(payload?.update)
                 }
+            }
+        }
+        case "SCROLL_ON" : {
+            return{
+                ...state,
+                parent_scroll: true
+            }
+        }
+        case "SCROLL_OFF" : {
+            return{
+                ...state,
+                parent_scroll: false
             }
         }
         default: return state

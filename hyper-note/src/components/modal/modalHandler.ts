@@ -1,4 +1,7 @@
-export const handleModalClick = (e: React.MouseEvent<Element, MouseEvent>,
+export const handleModalClick = (e: React.MouseEvent<Element, MouseEvent> | {
+    clientX: number;
+    clientY: number;
+},
     changeState: React.Dispatch<React.SetStateAction<boolean>>,
     changeCoordinate: React.Dispatch<React.SetStateAction<{
         x: number;

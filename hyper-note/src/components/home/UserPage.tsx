@@ -17,7 +17,7 @@ const UserPage = () => {
         Object.keys(state.selected).length !== 0 ? (
             <div className='h-screen w-full overflow-hidden'>
                 <TopBar />
-                <div className={` h-screen text-2xl font-semibold w-full overflow-y-auto`}>
+                <div className={` h-screen text-2xl font-semibold w-full ${state.parent_scroll? "overflow-y-auto":"overflow-hidden"} `}>
                     <CoverImage />
                     <span className="relative -top-10 left-20" >
                         {state.selected.icon !== '' ?

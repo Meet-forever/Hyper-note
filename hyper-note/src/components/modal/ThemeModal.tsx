@@ -7,7 +7,7 @@ const ThemeModal = () => {
     const [state, sidebardispatch] = multiReducer.sidebarList
     const [selectedState, prefdispatch] = multiReducer.preference
     const handleClick = (coverimg: string) => {
-        console.log(selectedState.selected.id, selectedState.selected.path)
+        // console.log(selectedState.selected.id, selectedState.selected.path)
         sidebardispatch({ type: 'UPDATE_CONTENT', payload: { id: selectedState.selected.id, update: { cover: coverimg }, path: selectedState.selected.path }})
         prefdispatch({ type: "UPDATE_SIDEBAR", payload: { update: { cover: coverimg } } })
     }
